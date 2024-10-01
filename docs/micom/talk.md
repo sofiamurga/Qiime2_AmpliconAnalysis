@@ -59,7 +59,7 @@ For this next part of the course, we'll revisit the theme of this years course: 
 
 ## The gut brain axis and its role in mental health
 
-<img src="assets/gut-brain-parkinson.png" width="50%">
+<img src="assets/gut-brain-parkinson.png" width="80%">
 
 
 <div class="footnote">
@@ -92,7 +92,7 @@ Note:
 
 ## Predicting SCFA production with MICOM
 
-<img src="assets/micom-scfa.png" width="40%">
+<img src="assets/micom-scfa.png" width="80%">
 
 
 Note:
