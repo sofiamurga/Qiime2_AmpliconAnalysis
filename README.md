@@ -1,43 +1,47 @@
-<a href="https://isbscience.org/microbiome2023"><img src="https://isbscience.org/microbiome2023/images/2023microbiome.png" width="60%"></a>
+<a href="https://isbscience.org/microbiome2024"><img src="https://isbscience.org/microbiome2024/images/2024-Microbiome_Course.png" width="60%"></a>
 
-![GitHub release](https://img.shields.io/github/tag/Gibbons-Lab/isb_course_2023.svg)
-![QIIME 2 version](https://img.shields.io/badge/Qiime%202%20version-2023.7-blue.svg)
-[![part 1](https://img.shields.io/website?up_color=green&up_message=up&label=part%201&url=https%3A%2F%2Fgibbons-lab.github.io%2Fisb_course_2023%2F16S)](https://gibbons-lab.github.io/isb_course_2023/16S)
-[![part 2](https://img.shields.io/website?up_color=green&up_message=up&label=part%202&url=https%3A%2F%2Fgibbons-lab.github.io%2Fisb_course_2023%2Fmicom)](https://gibbons-lab.github.io/isb_course_2023/micom)
+![GitHub release](https://img.shields.io/github/tag/Gibbons-Lab/isb_course_2024.svg)
+![QIIME 2 version](https://img.shields.io/badge/Qiime%202%20version-2024.7-blue.svg)
+[![part 1](https://img.shields.io/website?up_color=green&up_message=up&label=part%201&url=https%3A%2F%2Fgibbons-lab.github.io%2Fisb_course_2024%2F16S)](https://gibbons-lab.github.io/isb_course_2024/16S)
+[![part 2](https://img.shields.io/website?up_color=green&up_message=up&label=part%202&url=https%3A%2F%2Fgibbons-lab.github.io%2Fisb_course_2024%2Fmicom)](https://gibbons-lab.github.io/isb_course_2024/micom)
 
-# Materials for the 2023 ISB Virtual Microbiome Series
+# Materials for the 2024 ISB Virtual Microbiome Series
 
 ## Output
 
 All output generated during the walkthrough can be found in the
 [treasure chest](treasure_chest). The easiest way to get all of that
-is to [download the entire repository](https://github.com/Gibbons-Lab/isb_course_2023/archive/main.zip).
+is to [download the entire repository](https://github.com/Gibbons-Lab/isb_course_2024/archive/main.zip).
 
 ## Part 1: Amplicon Sequencing Data Analysis with QIIME 2
 
-Presentation: [![part 1](https://img.shields.io/website?up_color=green&up_message=up&label=part%201&url=https%3A%2F%2Fgibbons-lab.github.io%2Fisb_course_2023%2F16S)](https://gibbons-lab.github.io/isb_course_2023/16S)
-Notebook: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Gibbons-Lab/isb_course_2023/blob/main/16S_2023.ipynb)
+Presentation: [![part 1](https://img.shields.io/website?up_color=green&up_message=up&label=part%201&url=https%3A%2F%2Fgibbons-lab.github.io%2Fisb_course_2024%2F16S)](https://gibbons-lab.github.io/isb_course_2024/16S)
+Notebook: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Gibbons-Lab/isb_course_2024/blob/main/16S_2024.ipynb)
 
 You can see the actual workshop walkthrough at
-https://gibbons-lab.github.io/isb_course_2023/16S. Press `?` to get a list
+https://gibbons-lab.github.io/isb_course_2024/16S. Press `?` to get a list
 of available live options such as slide overviews and speaker mode. Note that
 some slides are grouped vertically, you can navigate the presentation using
 the directional buttons on your keyboard.
-A [PDF version](https://github.com/Gibbons-Lab/isb_course_2023/blob/main/docs/16S/talk.pdf) (lacks the output previews) is also available.
+A [PDF version](https://github.com/Gibbons-Lab/isb_course_2024/blob/main/docs/16S/talk.pdf) (lacks the output previews) is also available.
 
 
-## Part 2: Predicting personalized pathogen engraftment with metabolic models
+## Part 2: Predicting SCFA production in the context of Parkinson's disease with metabolic models
 
 
+<<<<<<< HEAD
+Presentation: [![part 2](https://img.shields.io/website?up_color=green&up_message=up&label=part%202&url=https%3A%2F%2Fgibbons-lab.github.io%2Fisb_course_2024%2Fmicom)](https://gibbons-lab.github.io/isb_course_2024/micom)
+=======
 Presentation: [![part 2](https://img.shields.io/website?up_color=green&up_message=up&label=part%202&url=https%3A%2F%2Fgibbons-lab.github.io%2Fisb_course_2023%2Fmicom)](https://gibbons-lab.github.io/isb_course_2023/micom)
-Notebook: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Gibbons-Lab/isb_course_2023/blob/main/micom_2023.ipynb)
+>>>>>>> 7a1071f4b15b4c3012e93bb21874876fae4f47db
+Notebook: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Gibbons-Lab/isb_course_2024/blob/main/micom_2024.ipynb)
 
 You can see the actual workshop walkthrough at
-https://gibbons-lab.github.io/isb_course_2023/micom. Press `?` to get a list
+https://gibbons-lab.github.io/isb_course_2024/micom. Press `?` to get a list
 of available live options such as slide overviews and speaker mode. Note that
 some slides are grouped vertically, you can navigate the presentation using
 the directional buttons on your keyboard.
-A [PDF version](https://github.com/Gibbons-Lab/isb_course_2023/blob/main/docs/micom/talk.pdf) (lacks the output previews) is also available.
+A [PDF version](https://github.com/Gibbons-Lab/isb_course_2024/blob/main/docs/micom/talk.pdf) (lacks the output previews) is also available.
 
 # Licensing
 
@@ -88,4 +92,3 @@ To generate a PDF of the course, open up the website in chromium or chrome and
 append `?print-pdf` to the address. For instance, if you ran it locally as
 described above, open `localhost:8000/16S?print-pdf` in the browser. Then, choose
 'print to PDF' (choose margins: none).
-# isb_course_2024
