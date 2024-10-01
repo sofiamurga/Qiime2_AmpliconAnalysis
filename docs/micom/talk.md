@@ -92,7 +92,7 @@ Note:
 
 ## Predicting SCFA production with MICOM
 
-<img src="assets/micom-scfa.png" width="120%">
+<img src="assets/micom-scfa.png" width="200%">
 
 
 Note:
