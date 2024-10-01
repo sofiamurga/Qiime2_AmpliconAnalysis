@@ -94,6 +94,12 @@ Note:
 
 <img src="assets/micom-scfa.png" width="150%">
 
+<div class="footnote">
+
+N. Quinn-Bohmann et al. https://doi.org/10.1038/s41564-024-01728-4
+
+</div>
+
 
 Note:
 
