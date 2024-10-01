@@ -108,7 +108,7 @@ Note:
 
 <br>
 
-<a href="https://colab.research.google.com/github/gibbons-lab/isb_course_2023/blob/main/micom_2023.ipynb"
+<a href="https://colab.research.google.com/github/gibbons-lab/isb_course_2024/blob/main/micom_2024.ipynb"
    target="_blank">Click me to open the notebook!</a>
 
 Note:
