@@ -77,7 +77,7 @@ Note:
 
 Short chain fatty acids (SCFAs) are one of the many metabolites produced by the microbiome
 
-<img src="assets/scfas-gut-brain.jpg" width="70%">
+<img src="assets/scfas-gut-brain.jpg" width="60%">
 
 <div class="footnote">
 
@@ -92,7 +92,7 @@ Note:
 
 ## Predicting SCFA production with MICOM
 
-<img src="assets/micom-scfa.png" width="100%">
+<img src="assets/micom-scfa.png" width="80%">
 
 <div class="footnote">
 
