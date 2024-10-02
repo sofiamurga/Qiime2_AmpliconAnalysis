@@ -13,7 +13,7 @@ from the *ISB Microbiome Course 2024*
 <a href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fa fa-bullhorn"></i>CC-BY-NC</a>
 <a href="https://gibbons.isbscience.org/"><i class="fa fa-globe"></i>gibbons.isbscience.org</a>
 <a href="https://github.com/gibbons-lab"><i class="fa fa-github"></i>gibbons-lab</a>
-<a href="https://www.linkedin.com/in/alyssa-n-easton-7692b4175"><i class="fa fa-linkedin"></i>LinkedIn</a>
+<a href="https://www.linkedin.com/in/alyssa-n-easton-7692b4175"><i class="fa fa-linkedin"></i>Alyssa N Easton</a>
 </div>
 
 ---
@@ -38,23 +38,15 @@ First, we'll need the slides, full of _digestible_ information
 ## Guts, Camera, Action :movie_camera:
 
 
-📕 Let's switch to the notebook and get started
+📕 Let's switch to the notebook and get started. Step 1: save a copy of this notebook in your Google Drive.
 
 <br>
 
 <a href="https://colab.research.google.com/github/gibbons-lab/isb_course_2024/blob/main/16S_2024.ipynb"
    target="_blank">Click me to open the notebook!</a>
 
+In case you get lost, *all* output we generate can be found on [Github](https://github.com/Gibbons-Lab/isb_course_2024/tree/main/treasure_chest), or in `materials/treasure_chest` in Colab.
 
----
-
-## In Case you Get Lost 🧭
-
-*All* output we generate can be found in the `treasure_chest` folder at
-
-https://github.com/Gibbons-Lab/isb_course_2024/tree/main/treasure_chest
-
-or `materials/treasure_chest` in the Colab notebook.
 
 ---
 
@@ -67,7 +59,7 @@ or `materials/treasure_chest` in the Colab notebook.
 - 30-40 trillion bacterial cells
 - Heterogenous between individuals
 - Helps digest food and produces metabolites
-- Affects our health
+- Affects our entire body, including the brain 🧠
 
 </div>
 
@@ -77,92 +69,33 @@ or `materials/treasure_chest` in the Colab notebook.
 
 ---
 
-## Measuring Your Microbes
+## The Gut-Brain Axis
 
-How do we see what is in the microbiome?
-
-- Hundreds to thousands of taxa in each person
-- Difficult to culture outside the resident environment
-- We can *sequence* their DNA instead
-
----
-
-<!-- .slide: data-background="var(--secondary)" class="dark" -->
-
-# QIIME 2
-
-Pronounced like *chime* 🔔
-
-Created ~2010 during the Human Microbiome Project (2007 - 2016) under the leadership
-of Greg Caporaso and Rob Knight.
-
----
-
-## What is QIIME 2?
-
-> *QIIME 2* is a powerful, extensible, and decentralized microbiome
-analysis package with a focus on data processing and analysis transparency.
-
-*Q*uantitative *i*nsights *i*nto *M*icrobial *E*cology
-
----
-
-## What can we do with QIIME 2?
-
-Essentially, QIIME 2 is a set of *commands* to transform microbiome *data* into
-*intermediate outputs* and *visualizations*.
-
-<img src="assets/barplot.gif" width="100%">
-
-It's commonly used via the *command line*. We'll use it within the Colab Notebook
-
----
-
-## Where to find help?
-
-QIIME 2 comes with a lot of help, including a wide range of [tutorials](https://docs.qiime2.org/2024.5/tutorials/),
-[general documentation](https://docs.qiime2.org/2024.5/) and a
-[user forum](https://forum.qiime2.org/) where you can ask questions.
-
----
-
-## Artifacts, actions and visualizations
-
-QIIME 2 manages *artifacts* (.qza), which are basically intermediate data that feed
-into *actions* to either produce other artifacts or *visualizations* (.qzv).
-
-<img src="assets/key.png" width="50%"><img src="assets/overview.png" width="50%">
+<img src="assets/gut_brain_axis.png" height="550vh">
 
 <div class="footnote">
 
-https://docs.qiime2.org/2024.5/concepts/
-https://docs.qiime2.org/2024.5/tutorials/overview/
+created with *BioRender.com*
 
 </div>
 
 ---
 
-## Remember
+## Why Parkinson's Disease?
 
-Artifacts often represent *intermediate steps*, but visualizations are *end points*
-meant for human consumption :point_up:.
+Parkinson's Disease (PD) is the *second* most common neurodegenerative disorder, estimated to affect *3* people per *1,000*.
+- PD characterized by degeneration of *dopaminergic* neurons, leading to motor impairment
+- Aggregation of alpha-synuclein leads to cell death and, more broadly, neuroinflammation
 
-Visualizations *cannot* be used as inputs for additional commands
+Motor symptoms are often *preceded* by gastrointestinal symptoms.
+- PD patients have increased gut epithelial permeability and inflammation
+- The gut microbiota have been shown to affect motor deficits and neuroinflammation in animal models of PD
 
----
+<div class="footnote">
 
-## What is amplicon sequencing?
+Add citations - mostly from [meta-analysis](https://www.nature.com/articles/s41531-021-00156-z)
 
-<img src="assets/16S.png" width="100%">
-
----
-
-## Why the 16S gene?
-
-![](assets/16S_gene.png)
-
-
-The 16S gene is *universal* and contains interspersed conserved regions perfect for *PCR* priming and hypervariable regions with *phylogenetic heterogeneity*.
+</div>
 
 ---
 
@@ -179,38 +112,73 @@ This data was later included in a 2021 [meta-analysis](https://www.nature.com/ar
 Today, we'll look at a *small subset* of the original data: 5 Parkinson's Disease patients and 5 healthy controls.
 
 ---
-## Why Parkinson's Disease?
 
-Parkinson's Disease is the *second* most common neurodegenerative disorder after Alzheimer's disease, affecting an estimated 2 people per 1,000.
-- PD characterized by degeneration of *dopaminergic* neurons, leading to motor impairment
-- Aggregation of alpha-synuclein leads to cell death and, more broadly, neuroinflammation
+## Measuring Your Microbes
 
-Motor symptoms are often *preceded* by gastrointestinal symptoms.
-- PD patients have increased gut epithelial permeability and inflammation
-- The gut microbiota have been shown to affect motor deficits and neuroinflammation in animal models of PD
+How do we see what is in the microbiome?
 
-<div class="footnote">
-
-Add citations - mostly from [meta-analysis](https://www.nature.com/articles/s41531-021-00156-z)
-
-</div>
----
-
-## The gut-brain axis
-
-<img src="assets/gut_brain_axis" height="550vh">
-
-<div class="footnote">
-
-created with *BioRender.com*
-
-</div>
+- Hundreds to thousands of taxa in each person
+- Difficult to culture outside the resident environment
+- We can *sequence* their DNA instead
 
 ---
 
 ## What will we do today?
 
 <img src="assets/steps.png" width="100%">
+
+</div>
+
+---
+
+<!-- .slide: data-background="var(--secondary)" class="dark" -->
+
+# QIIME 2: Quantitative Insights into Microbial Ecology
+
+Pronounced like *chime* 🔔
+
+Created ~2010 during the Human Microbiome Project (2007 - 2016) under the leadership
+of Greg Caporaso and Rob Knight.
+
+> *QIIME 2* is a powerful, extensible, and decentralized microbiome
+analysis package with a focus on data processing and analysis transparency.
+
+---
+
+## What can we do with QIIME 2?
+
+Essentially, QIIME 2 is a set of *commands* to transform microbiome *data* into
+*intermediate outputs* and *visualizations*.
+
+<img src="assets/barplot.gif" width="100%">
+
+It's commonly used via the *command line*. We'll use it within the Colab Notebook.
+
+---
+
+## Where to find help?
+
+QIIME 2 comes with a lot of help, including a wide range of [tutorials](https://docs.qiime2.org/2024.5/tutorials/),
+[general documentation](https://docs.qiime2.org/2024.5/) and a
+[user forum](https://forum.qiime2.org/) where you can ask questions.
+
+Now, let's check up on the notebook!
+
+---
+
+## Artifacts, actions and visualizations
+
+QIIME 2 manages *artifacts* (.qza), which are basically intermediate data that feed
+into *actions* to either produce other artifacts or *visualizations* (.qzv).
+
+<img src="assets/key.png" width="50%"><img src="assets/overview.png" width="50%">
+
+Visualizations *cannot* be used as inputs for additional commands
+
+<div class="footnote">
+
+https://docs.qiime2.org/2024.5/concepts/
+https://docs.qiime2.org/2024.5/tutorials/overview/
 
 </div>
 
@@ -223,6 +191,21 @@ To start, we'll import our raw data into QIIME as an *artifact*.
 :computer: Let's switch to the notebook and get started
 
 </div>
+
+---
+
+## What is amplicon sequencing?
+
+<img src="assets/16S.png" width="100%">
+
+---
+
+## Why the 16S gene?
+
+![](assets/16S_gene.png)
+
+
+The 16S gene is *universal* and contains interspersed conserved regions perfect for *PCR* priming and hypervariable regions with *phylogenetic heterogeneity*.
 
 ---
 
