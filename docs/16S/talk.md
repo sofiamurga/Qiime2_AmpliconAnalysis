@@ -99,8 +99,6 @@ Add citations - mostly from [meta-analysis](https://www.nature.com/articles/s415
 
 ---
 
-<!-- .slide: data-background="var(--primary)" class="dark" -->
-
 ## Analyzing gut microbial composition in Parkinson's Disease (PD)
 
 In a 2017 [study](https://movementdisorders.onlinelibrary.wiley.com/doi/10.1002/mds.26942), *Hill-Burns et. al.* performed 16S rRNA sequencing of DNA extracted from the stool of 197 PD cases and 130 controls. Using tools like QIIME, they identified small but significant effects of Parkinson's Disease and common PD medications on the gut microbiome. 
@@ -143,9 +141,13 @@ of Greg Caporaso and Rob Knight.
 > *QIIME 2* is a powerful, extensible, and decentralized microbiome
 analysis package with a focus on data processing and analysis transparency.
 
+QIIME 2 comes with a lot of help, including a wide range of [tutorials](https://docs.qiime2.org/2024.5/tutorials/),
+[general documentation](https://docs.qiime2.org/2024.5/) and a
+[user forum](https://forum.qiime2.org/) where you can ask questions.
+
 ---
 
-## What can we do with QIIME 2?
+## But what is QIIME2, really?
 
 Essentially, QIIME 2 is a set of *commands* to transform microbiome *data* into
 *intermediate outputs* and *visualizations*.
@@ -156,20 +158,14 @@ It's commonly used via the *command line*. We'll use it within the Colab Noteboo
 
 ---
 
-## Where to find help?
+## QIIME2 uses its own file formats ...
 
-QIIME 2 comes with a lot of help, including a wide range of [tutorials](https://docs.qiime2.org/2024.5/tutorials/),
-[general documentation](https://docs.qiime2.org/2024.5/) and a
-[user forum](https://forum.qiime2.org/) where you can ask questions.
+... but don't let the names scare you 👻
 
-Now, let's check up on the notebook!
+QIIME2 *artifacts* (.qza) are intermediate data (often times tables), while *visualizations* (.qzv) are files specifically formatted for QIIME2 Viewer.
 
----
+When we run a QIIME2 command, we specify the inputs and *action* to perform, and QIIME2 will output artifacts and/or visualizations.
 
-## Artifacts, actions and visualizations
-
-QIIME 2 manages *artifacts* (.qza), which are basically intermediate data that feed
-into *actions* to either produce other artifacts or *visualizations* (.qzv).
 
 <img src="assets/key.png" width="50%"><img src="assets/overview.png" width="50%">
 
@@ -184,7 +180,7 @@ https://docs.qiime2.org/2024.5/tutorials/overview/
 
 ---
 
-## Artifact Hunting
+## Let's make an artifact
 
 To start, we'll import our raw data into QIIME as an *artifact*.
 
@@ -205,16 +201,30 @@ To start, we'll import our raw data into QIIME as an *artifact*.
 ![](assets/16S_gene.png)
 
 
-The 16S gene is *universal* and contains interspersed conserved regions perfect for *PCR* priming and hypervariable regions with *phylogenetic heterogeneity*.
+The 16S gene is *universal* and contains interspersed conserved regions perfect for *PCR* priming and hypervariable regions with *phylogenetic heterogeneity*. Our data used the V4 region. 
+
+The V4-specific primers used in this study were F515/R806. How long is the amplified fragment, and how long are the reads?
 
 ---
 
-## Denoising with DADA 2
+## Errors during PCR and sequencing generate *noise*
+
+PCR errors including polymerase substitution errors and chimerism are amplified over PCR cycles. Further, next generation sequencing still produces errors.
+
+<img src="assets/chimera.png" width="50%"><img src="assets/seq_error.png" width="50%">
+
+![read overlap](https://gibbons-lab.github.io/isb_course_2024/16S/assets/read_overlap.png)
+
+![read overlap](https://gibbons-lab.github.io/isb_course_2024/16S/assets/chimera.png)
+
+---
+
+## DADA 2 to the rescue!
 
 We just ran the DADA2 plugin for QIIME, which is doing 4 things:
 
-1. filter and trim the reads
-2. find the most likely original sequences in the sample (ASVs)
+1. *filter and trim* the reads
+2. find the most likely *original sequences* in the sample (ASVs)
 3. remove chimeras
 4. count the abundances
 
@@ -222,33 +232,29 @@ We just ran the DADA2 plugin for QIIME, which is doing 4 things:
 
 ---
 
-## Preprocessing sequencing reads
+## 1. Filter and trim
 
 1. trim low quality regions
 2. remove reads with low average quality
 3. remove reads with ambiguous bases (Ns)
 4. remove PhiX (added to sequencing)
 
+<img src="assets/seq_quality.png" width="50%">
+
 ---
 
-## Identifying amplicon sequence variants (ASVs)
+## Identifying Amplicon Sequence Variants (ASVs)
 
 <img src="assets/dada2.png" width="80%">
 
-Expectation-Maximization (EM) algorithm to find amplicon sequence variants
-(ASVs) and the real error model at the same time.
+Expectation-Maximization (EM) algorithm simultaneously assigns ASVs and models error.
+
+
+This type of algorithm is an improvement to the previous method of operational taxonomic unit (OTU) construction, which clusters reads that surpass a fixed similarity threshold (often 97%). More information on these methods can be found ![here](https://www.nature.com/articles/ismej2017119)
 
 ---
 
-## PCR chimeras
-
-<img src="assets/chimera.png" width="60%">
-
-The primers used in this study were F515/R806. How long is the amplified fragment?
-
----
-
-We now have a table containing the counts for each ASV in each sample.
+DADA2 output a table  now have a table containing the counts for each ASV in each sample.
 We also have a list of ASVs.
 
 <br>
@@ -280,14 +286,7 @@ How diverse is a single sample?
 - *mixtures*: metrics that combine both richness and evenness<br>
   → Shannon Index, Simpson's Index
 
----
-
-## Statistical tests for alpha diversity
-
-Alpha diversity will provide a single value for each sample.
-
-It can be treated as any other sample measurement and is suitable for classic
-univariate tests (t-test, Mann-Whitney U test).
+Each sample has *1* Shannon Index.
 
 ---
 
@@ -302,15 +301,19 @@ How different are two or more samples/donors/sites from one another other?
 - *weighted:* do shared taxa have *similar abundances*?<br>
   → Bray-Curtis distance, weighted UniFrac
 
+Each sample has *n* Bray-Curtis distances, where n = number of samples.
+Therefore, beta-diversity is a *matrix*
+
 ---
 
 ### UniFrac
 
 Do samples share *genetically similar* taxa?
+UniFrac distance = branch length
 
 <img src="assets/unifrac.png" width="70%">
 
-Weighted UniFrac scales branches by abundance.
+Weighted UniFrac *scales* branches by *abundance*, so the presence of one distant member does not skew diversity.
 
 ---
 
@@ -322,7 +325,19 @@ all samples are related to one another. That is, we are often interested in thei
 Phylogenetic trees are built from *multiple sequence alignments* and sequences are
 arranged by *sequence similarity* (branch length).
 
+Let's make one!
+
 ---
+
+## Statistical tests for alpha diversity
+
+Alpha diversity will provide a single value for each sample.
+
+It can be treated as any other sample measurement and is suitable for classic
+univariate tests (t-test, Mann-Whitney U test).
+
+---
+
 
 ## Principal Coordinate Analysis
 
@@ -386,6 +401,48 @@ often provides better *generalization* and faster results.
 ## Let's assign taxonomy to the sequences
 
 :computer: Let's switch to the notebook and assign taxonomy to our ASVs
+
+---
+
+## How do we know if relative abundance is significantly different between groups?
+
+It's not quite so simple as a t-test... nor is there a perfect method. 
+Every method makes assumptions and has caveats, but some have more than others.
+
+This is a problem microbiome researchers and statisticians have been working on for decades, so I will go over some key concepts briefly, but please refer to these references to learn more:
+
+
+---
+
+## Why so complicated?
+
+This is a challenging problem because microbiome sequencing data is:
+
+1. Compositional: the relative abundance of each taxa is **dependent** upon the abundance of all the other taxa. We cannot treat them as independent variables, like you might in a multivariate regression (show formula crossed out!)
+2. Sparse: Not every taxa is measured in every sample. But is this because the microbe is not present at all, or we did not sequence deep enough to detect it? Do we __impute__ these zeros (pseudocount) so we are not missing data points, or do we exclude the zeros from analysis entirely?
+3. Tail-heavy: an individual microbiome will typically have a few dominant taxa, and many low-abundance taxa. These low-abundance taxa still matter ...
+4. Biased:
+
+---
+
+## A basic approach: the center-log ratio (CLR) transform.
+
+Show plots of transform, how it goes from weird to normal-ish
+Caveats: dealing with zeroes difficult
+
+---
+
+## Differential Abundance Analysis in QIIME2 with ANCOM
+
+ANCOM is an R package that has been implemented as a QIIME2 plugin.
+Because of this, you can run it from the command line, but it's important to be aware of its assumptions.
+
+---
+
+## More robust methods
+
+radEmu preprint:
+show example
 
 ---
 
