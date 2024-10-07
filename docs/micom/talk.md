@@ -19,7 +19,7 @@ from the *ISB Microbiome Course 2024*
 
 Note:
 
-Hello everyone, thank you for joining us for the second day of this years ISB Microbiome Course. My name is Alex, I'm a post doc in the Gibbons lab and I'll be the instructor for today's portion of the course. The focus of todays course is personalized predictions of microbiome activity, using metabolic modeling how that can provide insights into the gut brain axis.
+Hello everyone, thank you for joining us for the second day of this years ISB Microbiome Course. My name is Alex, I'm a post doc in the Gibbons lab and I'll be the instructor for today's portion of the course. The focus of todays course is Predicting microbiome activity in the context of Parkinson's disease with metabolic models.
 
 ---
 
@@ -52,7 +52,7 @@ As a reminder, as with yesterday, this course will be taught across three module
 
 Note:
 
-For this next part of the course, we'll revisit the theme of this years course: Predicting microbiome activity in the context of Parkinson's disease with metabolic models
+For this next part of the course, we'll revisit the theme of this year's course: Microbes and their impacts on our minds
 
 
 ---
@@ -68,7 +68,7 @@ Lorente-Picón M. et al. https://doi.org/10.3390/biom11030433
 
 </div>
 
-Note:
+Note: So how do microbes influence our minds and how can this impact disease progression in the case of Parkinson's disease? Well, the microbiome is a source of a wide range of molecules that can directory or indirectly impact host processes. One class of  microbiome-derived metabolites, short chain fatty acids or SCFAs have garnered a lot of attention in recent years for their apparent anti-inflammatory properties. As this figure demonstrates, a variety of factors, including diet, age, environmental exposures, and immune status can impact the state of the microbiome and the production of SCFAs. Diets high in fiber and other beneficial metabolites like polyphenols and omega-3-fatty acids generally lead to higher levels of SCFAs in the gut which help promote gut barrier health, lower gut inflammation, and can have downstream effects that ultimately impact brain function. Additionally, fiber promotes gut motility- which is important as constipation is one of the hallmark symptoms that proceeds the development of Parkinson's disease.
 
 
 ---
@@ -85,28 +85,9 @@ Mansuy-Aubert V. et al. https://doi.org/10.3389/fnins.2023.1197759
 
 </div>
 
-Note:
-
-
----
-
-## Predicting SCFA production with MICOM
-
-<img src="assets/micom-scfa.png" width="70%">
-
-<div class="footnote">
-
-N. Quinn-Bohmann et al. https://doi.org/10.1038/s41564-024-01728-4
-
-</div>
-
-
-Note:
-
+Note: Acetic acid, propionic acid, and butyric acid are the three most common SCFAs produced (representing ∼60, 25, and 15%, respectively, in humans). Estimates suggest they are responsible for 60–70% of colonic epithelial energy in humans. In addition to their anti-inflammatory properties and uses as energy sources butyrate and propionate have been shown to impact the production of hormones that can suppress feelings of hunger through signaling interactions that are mediated by the FFAR3 receptor on the nodese ganglion. Thus, SCFAs play a role in a wide array of processes that can benefit the host.
 
 ---
-
-<!-- .slide: data-background="var(--primary)" class="dark" -->
 
 ## Let's set up our Notebook!
 
@@ -230,43 +211,6 @@ The art of FBA is to then find a single solution in that solution space that is 
 
 ---
 
-# MICOM
-
-<img src="assets/summary.png" width="100%">
-
-<div class="footnote">
-
-https://micom-dev.github.io/micom
-
-</div>
-
-
-Note:
-
-To this point, we've focused on making genome scale metabolic models. To make metabolic models of the microbiome community, or metagenome scale metabolic models, we use a tool called MICOM, which extends flux balance analysis into microbial communities. To initially build the models, we need to pass in the relative abundance of bacteria in the sample. Due to sequencing efficiency differences, there may be some bias toward some bacteria over others, but the abundance from sequencing data should be more or less representative of the community. MICOM will then map this abundance data to a database containing hundreds genome-scale metabolic models of common gut microbes. MICOM then uses the reconstructions of those taxa present in the sample to build a massive stoichiometric matrix like the one we discussed earlier that includes not only the internal reactions within each taxon, but also the exchanges between them and external reactions, which in this case is the host. We can then specify a diet that is representative of the food being eaten by the subject of the model and use FBA with an additional regularization step to calculate unique growth rates for all the bacteria based on the process we've outlined previously. Following this, estimates of all the fluxes in the system can be generated based on those growth rates, returning a most likely flux distribution. This give us a huge amount of output data, which we can then use to make detailed and interesting predictions about imports, exports, the inner machinations of bacterial reaction networks, co-dependcies between bacteria, and a testing ground for potential interventions.
-
-
----
-
-<img src="assets/overview.png" width="120%">
-
-
-Note:
-
-Here's the typical workflow for building metabolic models. First we build the models using abundance data and a database of genome scale metabolic models, then apply a medium representing available metabolites, and finally grow the models using a multi-step FBA method that'll we'll cover shortly. Whats neat about MICOM is that are two interfaces in which you can use it, both in python or in Qiime2. Today we'll be using the python interface, as that works in Colab, but you can preform any task with either of the interfaces, either actions like building or growing models or producing visualizations. It's also easy to switch between the two interfaces between steps, as MICOM can readily read Qiime artifacts and vice versa.
-
----
-
-<!-- .slide: data-background="var(--primary)" class="dark" -->
-
-## Let's return to the models we've built
-
-:computer: Let's switch to the notebook!
-
----
-
-<!-- .slide: data-background="var(--primary)" class="dark" -->
-
 ## Community-wide growth is hard :cry:
 
 In a single genome-scale model we only have a single growth rate $\mu$. In a microbial community
@@ -330,6 +274,23 @@ This is where cooperative trade off flux balance comes in. This approach is able
 
 *Cooperative Tradeoff FBA* allows us to treat metagenome-scale models with the *same*
 methods as genome-scale metabolic models (pFBA, minimal media, etc).
+
+---
+
+# MICOM
+
+<img src="assets/overview.png" width="120%">
+
+<div class="footnote">
+
+https://micom-dev.github.io/micom
+
+</div>
+
+
+Note:
+
+To this point, we've focused on making genome scale metabolic models. To make metabolic models of the microbiome community, or metagenome scale metabolic models, we use a tool called MICOM, which extends flux balance analysis into microbial communities. To initially build the models, we need to pass in the relative abundance of bacteria in the sample. Due to sequencing efficiency differences, there may be some bias toward some bacteria over others, but the abundance from sequencing data should be more or less representative of the community. MICOM will then map this abundance data to a database containing hundreds genome-scale metabolic models of common gut microbes. MICOM then uses the reconstructions of those taxa present in the sample to build a massive stoichiometric matrix like the one we discussed earlier that includes not only the internal reactions within each taxon, but also the exchanges between them and external reactions, which in this case is the host. We can then specify a diet that is representative of the food being eaten by the subject of the model and use FBA with an additional regularization step to calculate unique growth rates for all the bacteria based on the process we've outlined previously. Following this, estimates of all the fluxes in the system can be generated based on those growth rates, returning a most likely flux distribution. This give us a huge amount of output data, which we can then use to make detailed and interesting predictions about imports, exports, the inner machinations of bacterial reaction networks, co-dependcies between bacteria, and a testing ground for potential interventions.
 
 ---
 
@@ -447,14 +408,13 @@ Finally, once we're done looking at our output, it'll be your turn to jump in th
 
 <div>
 
-Nick Bohmann <br>
-Sean Gibbons <br>
 Alyssa Easton <br>
-Katherine Ramos Sarmiento <br>
-Noa Rappaport <br>
+Sean Gibbons <br>
+Noa Rappaport <be>
+Jacob Cavon <br>
+Crystal Perez <br>
+Nick Quinn-Bohmann <br>
 Karl Gaisser <br>
-Chloe Herman <br>
-Greg Caporaso <br>
 Christian Diener
 
 </div>
@@ -467,6 +427,7 @@ Audri Hubbard <br>
 Joe Myxter <br>
 Thea Swanson <br>
 Victoria Uhl<br>
+Ray Rosario<br>
 Connor Kelly<br>
 Shanna Braga<br>
 ISB Facilities Team
