@@ -48,7 +48,7 @@ As a reminder, as with yesterday, this course will be taught across three module
 ---
 <!-- .slide: data-background="var(--primary)" class="dark" -->
 
-## Modeling microbiome activity in the context of disease: can we identify microbiomes role in disease?
+## Modeling microbiome activity in the context of disease: can we identify the microbiome's role in disease?
 
 Note:
 
@@ -389,7 +389,7 @@ Finally, we'll take a look at the metabolic imports predicted from the growth of
 
 ## Your turn
 
-Lets figure out how to use MICOM investigate the niche occupied by C. diff in our samples.
+Let's figure out how to use MICOM to investigate the niche occupied by genera in our samples!
 
 <img src="assets/coding.gif" width="50%">
 
