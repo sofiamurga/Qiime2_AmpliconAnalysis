@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Growth rates</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.27.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.17.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.24.0"></script>
+
+    <style>
+    #vis {
+        width: 100%;
+        margin: 1em;
+    }
+    </style>
+  </head>
+  <body>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+        Growth rates
+      </h1>
+      <p class="subtitle">
+        Each point denotes a single taxon in a single sample. Shown are the
+        predicted growth rates only if growth was observed (growth rate larger
+        than numerical tolerance of the solver).<br>
+        Click a point to select points from only that sample. Click on an
+        empty region of the plot to reset the selection.<br>
+        Hover over each point to see its annotations. Use the "..." menu in the
+        upper right hand side to export the plot into various formats.
+      </p>
+    </div>
+    <!-- Container for the visualization -->
+    <div class="container">
+    <div id="vis"></div>
+    <a href="#" class="button is-primary" onclick="download_data('growth_rates')">Download as CSV...</a>
+
+    </div>
+    <script>
+      // Assign the specification to a local variable vlSpec.
+      var vlSpec = {
+        $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+        width: 300,
+        height: 324,
+        data: {
+            values: [{"taxon":"g__Acidaminococcus","sample_id":"ERR1513701","abundance":0.0877614471,"growth_rate":0.1590106785},{"taxon":"g__Akkermansia","sample_id":"ERR1513701","abundance":0.1984171849,"growth_rate":0.3297512475},{"taxon":"g__Bacteroides","sample_id":"ERR1513701","abundance":0.2963538722,"growth_rate":0.5217256274},{"taxon":"g__Bifidobacterium","sample_id":"ERR1513701","abundance":0.0869135105,"growth_rate":0.157523474},{"taxon":"g__Parabacteroides","sample_id":"ERR1513701","abundance":0.168598078,"growth_rate":0.298668396},{"taxon":"g__Phocaeicola","sample_id":"ERR1513701","abundance":0.1619559073,"growth_rate":0.2927855803},{"taxon":"g__Alistipes","sample_id":"ERR1513684","abundance":0.0819712729,"growth_rate":0.1505744004},{"taxon":"g__Bacteroides","sample_id":"ERR1513684","abundance":0.2508667657,"growth_rate":0.4571510072},{"taxon":"g__Blautia","sample_id":"ERR1513684","abundance":0.0705794948,"growth_rate":0.1181711198},{"taxon":"g__Faecalibacterium","sample_id":"ERR1513684","abundance":0.2097573056,"growth_rate":0.2613901254},{"taxon":"g__Phocaeicola","sample_id":"ERR1513684","abundance":0.3184744923,"growth_rate":0.554353367},{"taxon":"g__Pseudomonas","sample_id":"ERR1513684","abundance":0.0683506686,"growth_rate":0.1255558054},{"taxon":"g__Bacteroides","sample_id":"ERR1513703","abundance":0.4567069546,"growth_rate":0.6376276534},{"taxon":"g__Blautia","sample_id":"ERR1513703","abundance":0.1777293442,"growth_rate":0.2233471359},{"taxon":"g__Dysgonomonas","sample_id":"ERR1513703","abundance":0.158906281,"growth_rate":0.2228971907},{"taxon":"g__Flavonifractor","sample_id":"ERR1513703","abundance":0.1081830791,"growth_rate":0.0995103168},{"taxon":"g__Alistipes","sample_id":"ERR1513777","abundance":0.1186455208,"growth_rate":0.2839838829},{"taxon":"g__Bacteroides","sample_id":"ERR1513777","abundance":0.195970853,"growth_rate":0.4486160315},{"taxon":"g__Butyrivibrio","sample_id":"ERR1513777","abundance":0.1819974282,"growth_rate":0.4080934365},{"taxon":"g__Faecalibacterium","sample_id":"ERR1513777","abundance":0.2130304329,"growth_rate":0.3518882377},{"taxon":"g__Parabacteroides","sample_id":"ERR1513777","abundance":0.1439348478,"growth_rate":0.3313933425},{"taxon":"g__Phocaeicola","sample_id":"ERR1513777","abundance":0.1464209173,"growth_rate":0.3363914927},{"taxon":"g__Alistipes","sample_id":"ERR1513870","abundance":0.1062880612,"growth_rate":0.2296355778},{"taxon":"g__Bacteroides","sample_id":"ERR1513870","abundance":0.1624415805,"growth_rate":0.3344472772},{"taxon":"g__Faecalibacterium","sample_id":"ERR1513870","abundance":0.2832459992,"growth_rate":0.5661202009},{"taxon":"g__Phocaeicola","sample_id":"ERR1513870","abundance":0.2178161733,"growth_rate":0.450211333},{"taxon":"g__Roseburia","sample_id":"ERR1513870","abundance":0.0895765472,"growth_rate":0.191382985},{"taxon":"g__Ruminococcus","sample_id":"ERR1513870","abundance":0.1406316386,"growth_rate":0.0286908804},{"taxon":"g__Bacteroides","sample_id":"ERR1513889","abundance":0.1183504148,"growth_rate":0.1913047715},{"taxon":"g__Bifidobacterium","sample_id":"ERR1513889","abundance":0.0998047828,"growth_rate":0.1664798693},{"taxon":"g__Faecalibacterium","sample_id":"ERR1513889","abundance":0.1220107369,"growth_rate":0.1909395544},{"taxon":"g__Parabacteroides","sample_id":"ERR1513889","abundance":0.1691068814,"growth_rate":0.2816161958},{"taxon":"g__Phocaeicola","sample_id":"ERR1513889","abundance":0.362249878,"growth_rate":0.5880999635},{"taxon":"g__Ruminococcus","sample_id":"ERR1513889","abundance":0.128477306,"growth_rate":0.2099300855},{"taxon":"g__Bacteroides","sample_id":"ERR1513961","abundance":0.108113069,"growth_rate":0.1273902026},{"taxon":"g__Blautia","sample_id":"ERR1513961","abundance":0.09489721,"growth_rate":0.1106788568},{"taxon":"g__Faecalibacterium","sample_id":"ERR1513961","abundance":0.187958884,"growth_rate":0.2133466008},{"taxon":"g__Phocaeicola","sample_id":"ERR1513961","abundance":0.4080396476,"growth_rate":0.4812589737},{"taxon":"g__Ruminococcus","sample_id":"ERR1513961","abundance":0.2009911894,"growth_rate":0.2281001385},{"taxon":"g__Faecalibacterium","sample_id":"ERR1513983","abundance":0.0928224501,"growth_rate":0.071882014},{"taxon":"g__Paraprevotella","sample_id":"ERR1513983","abundance":0.1044252563,"growth_rate":0.1029892693},{"taxon":"g__Phocaeicola","sample_id":"ERR1513983","abundance":0.0812196438,"growth_rate":0.0769757079},{"taxon":"g__Prevotella","sample_id":"ERR1513983","abundance":0.6073934161,"growth_rate":0.5910469835},{"taxon":"g__Pseudomonas","sample_id":"ERR1513983","abundance":0.1141392337,"growth_rate":0.112601715},{"taxon":"g__Alistipes","sample_id":"ERR1513964","abundance":0.1098183545,"growth_rate":0.2740450896},{"taxon":"g__Bacteroides","sample_id":"ERR1513964","abundance":0.1303573549,"growth_rate":0.3226071649},{"taxon":"g__Blautia","sample_id":"ERR1513964","abundance":0.0775258222,"growth_rate":0.1806513926},{"taxon":"g__Butyrivibrio","sample_id":"ERR1513964","abundance":0.1117179152,"growth_rate":0.2746352896},{"taxon":"g__Faecalibacterium","sample_id":"ERR1513964","abundance":0.132138193,"growth_rate":0.3076122174},{"taxon":"g__Phocaeicola","sample_id":"ERR1513964","abundance":0.2408880446,"growth_rate":0.5778310298},{"taxon":"g__Pseudomonas","sample_id":"ERR1513964","abundance":0.1975543156,"growth_rate":0.4929842903},{"taxon":"g__Acinetobacter","sample_id":"ERR1514003","abundance":0.5176457323,"growth_rate":0.6269635094},{"taxon":"g__Bacteroides","sample_id":"ERR1514003","abundance":0.1402638403,"growth_rate":0.1570035077},{"taxon":"g__Faecalibacterium","sample_id":"ERR1514003","abundance":0.0787010937,"growth_rate":0.0838062378},{"taxon":"g__Phocaeicola","sample_id":"ERR1514003","abundance":0.1551471417,"growth_rate":0.174793824},{"taxon":"g__Pseudomonas","sample_id":"ERR1514003","abundance":0.1082421919,"growth_rate":0.1311110411}]
+        },
+        selection: {
+          pts: {type: "single", fields: ["sample_id"]}
+        },
+        transform: [{
+          calculate: "random()-0.5",
+          as: "jitter"
+        }],
+        mark: {
+            type: "point",
+            filled: true,
+            size: 40,
+            tooltip: {content: "data"}
+        },
+        encoding: {
+          x: {
+            field: "growth_rate",
+            type: "quantitative",
+            scale: {type: "log"},
+            axis: {title: "growth rate [1/h]", grid: false}
+          },
+          y: {
+            field: "taxon",
+            type: "nominal",
+            sort: {op: "median", field: "growth_rate", order: "descending"},
+            axis: {title: null, grid: true}
+          },
+          yOffset: {
+            field: "jitter",
+            type: "quantitative",
+            scale: {domain: [-1, 1]}
+          },
+          color: {
+            condition: {
+              selection: "pts",
+              field: "taxon",
+              type: "nominal",
+              legend: null
+            },
+            value: "lightgrey"
+          },
+          opacity: {
+            condition: {
+                selection: "pts",
+                value: 0.8
+            },
+            value: 0.2
+          }
+        }
+      };
+
+      // Embed the visualization in the container with id `vis`
+      vegaEmbed("#vis", vlSpec, {renderer: "svg"}).then(function(r) {
+        svg = document.querySelector("#vis svg");
+        svg.setAttribute("width", "100%");
+        svg.setAttribute("height", "auto");
+      });
+
+      files = {'growth_rates': 'taxon,sample_id,abundance,growth_rate\ng__Acidaminococcus,ERR1513701,0.08776144714527984,0.15901067849237474\ng__Akkermansia,ERR1513701,0.19841718485019788,0.3297512474730184\ng__Bacteroides,ERR1513701,0.2963538722442058,0.5217256274461782\ng__Bifidobacterium,ERR1513701,0.08691351045788583,0.15752347396582264\ng__Parabacteroides,ERR1513701,0.16859807801017526,0.29866839601413864\ng__Phocaeicola,ERR1513701,0.16195590729225554,0.29278558027878293\ng__Alistipes,ERR1513684,0.08197127290737988,0.15057440040440084\ng__Bacteroides,ERR1513684,0.25086676572560673,0.4571510071909107\ng__Blautia,ERR1513684,0.07057949479940563,0.11817111984131694\ng__Faecalibacterium,ERR1513684,0.20975730559683006,0.26139012535113765\ng__Phocaeicola,ERR1513684,0.3184744923229321,0.5543533669547717\ng__Pseudomonas,ERR1513684,0.06835066864784546,0.1255558054462588\ng__Bacteroides,ERR1513703,0.45670695462651084,0.6376276534032587\ng__Blautia,ERR1513703,0.17772934416485042,0.22334713591525723\ng__Dysgonomonas,ERR1513703,0.15890628095898557,0.2228971906967073\ng__Flavonifractor,ERR1513703,0.10818307905686549,0.09951031677123748\ng__Alistipes,ERR1513777,0.11864552078868408,0.2839838828587929\ng__Bacteroides,ERR1513777,0.195970852978997,0.4486160315331256\ng__Butyrivibrio,ERR1513777,0.18199742820402912,0.4080934365076828\ng__Faecalibacterium,ERR1513777,0.2130304329189884,0.3518882377433679\ng__Parabacteroides,ERR1513777,0.14393484783540506,0.3313933425281121\ng__Phocaeicola,ERR1513777,0.14642091727389625,0.33639149270939983\ng__Alistipes,ERR1513870,0.10628806118113582,0.22963557780535787\ng__Bacteroides,ERR1513870,0.16244158051267524,0.3344472771886193\ng__Faecalibacterium,ERR1513870,0.283245999150262,0.566120200937346\ng__Phocaeicola,ERR1513870,0.21781617334655146,0.45021133295088317\ng__Roseburia,ERR1513870,0.08957654723127036,0.19138298499881326\ng__Ruminococcus,ERR1513870,0.14063163857810507,0.02869088043631764\ng__Bacteroides,ERR1513889,0.11835041483650563,0.19130477150165345\ng__Bifidobacterium,ERR1513889,0.09980478282088825,0.16647986933679046\ng__Faecalibacterium,ERR1513889,0.12201073694485116,0.19093955442120075\ng__Parabacteroides,ERR1513889,0.1691068814055637,0.28161619580293085\ng__Phocaeicola,ERR1513889,0.3622498779892631,0.5880999635046772\ng__Ruminococcus,ERR1513889,0.12847730600292828,0.2099300855031268\ng__Bacteroides,ERR1513961,0.10811306901615272,0.12739020260226186\ng__Blautia,ERR1513961,0.09489720998531571,0.11067885683853887\ng__Faecalibacterium,ERR1513961,0.1879588839941263,0.2133466008360126\ng__Phocaeicola,ERR1513961,0.4080396475770925,0.4812589736996654\ng__Ruminococcus,ERR1513961,0.20099118942731278,0.2281001385298804\ng__Faecalibacterium,ERR1513983,0.0928224500809498,0.07188201396462401\ng__Paraprevotella,ERR1513983,0.10442525634106854,0.10298926925468246\ng__Phocaeicola,ERR1513983,0.08121964382083108,0.07697570788938222\ng__Prevotella,ERR1513983,0.6073934160820291,0.5910469834588136\ng__Pseudomonas,ERR1513983,0.11413923367512142,0.1126017150378372\ng__Alistipes,ERR1513964,0.10981835450552059,0.2740450895586769\ng__Bacteroides,ERR1513964,0.13035735486168823,0.32260716487344776\ng__Blautia,ERR1513964,0.07752582215362697,0.18065139257739107\ng__Butyrivibrio,ERR1513964,0.11171791523210256,0.27463528964497785\ng__Faecalibacterium,ERR1513964,0.13213819304285881,0.30761221738967504\ng__Phocaeicola,ERR1513964,0.24088804463967703,0.5778310298196425\ng__Pseudomonas,ERR1513964,0.19755431556452568,0.49298429033445024\ng__Acinetobacter,ERR1514003,0.5176457323260797,0.6269635093874095\ng__Bacteroides,ERR1514003,0.14026384034276695,0.15700350765543505\ng__Faecalibacterium,ERR1514003,0.07870109369714738,0.08380623778486009\ng__Phocaeicola,ERR1514003,0.15514714172962005,0.17479382403774726\ng__Pseudomonas,ERR1514003,0.10824219190438607,0.13111104107737245\n'};
+
+function download_data(key) {
+    var blob = new Blob([files[key]], {type: "text/csv;charset=utf-8;"}),
+        filename = key + ".csv",
+        url = window.URL.createObjectURL(blob);
+    if (navigator.msSaveBlob) { // IE 10+
+        navigator.msSaveBlob(blob, filename);
+    } else {
+        var link = document.createElement("a");
+        if (link.download !== undefined) { // feature detection
+            // Browsers that support HTML5 download attribute
+            var url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }
+}
+    </script>
+  </section>
+  </body>
+</html>
