@@ -71,12 +71,10 @@ In case you get lost, *all* output we generate can be found on [Github](https://
 
 ## The Gut-Brain Axis
 
-<img src="assets/gut_brain_axis.png" height="550vh">
+<img src="assets/gut_brain_axis.png" height="700vh">
 
 <div class="footnote">
-
 created with *BioRender.com*
-
 </div>
 
 ---
@@ -215,7 +213,7 @@ PCR errors including polymerase substitution errors and chimerism are amplified 
 
 ![read overlap](https://gibbons-lab.github.io/isb_course_2024/16S/assets/read_overlap.png)
 
-![read overlap](https://gibbons-lab.github.io/isb_course_2024/16S/assets/chimera.png)
+![chimera](https://gibbons-lab.github.io/isb_course_2024/16S/assets/chimera.png)
 
 ---
 
@@ -404,38 +402,79 @@ often provides better *generalization* and faster results.
 
 ---
 
-## How do we know if relative abundance is significantly different between groups?
+<!-- .slide: data-background="var(--primary)" class="dark" -->
 
-It's not quite so simple as a t-test... nor is there a perfect method. 
-Every method makes assumptions and has caveats, but some have more than others.
+# Differential Abundance Analysis
 
-This is a problem microbiome researchers and statisticians have been working on for decades, so I will go over some key concepts briefly, but please refer to these references to learn more:
-
+How do we know if relative abundance is significantly different between groups?
 
 ---
 
-## Why so complicated?
+## What taxonomic level should we use?
 
-This is a challenging problem because microbiome sequencing data is:
-
-1. Compositional: the relative abundance of each taxa is **dependent** upon the abundance of all the other taxa. We cannot treat them as independent variables, like you might in a multivariate regression (show formula crossed out!)
-2. Sparse: Not every taxa is measured in every sample. But is this because the microbe is not present at all, or we did not sequence deep enough to detect it? Do we __impute__ these zeros (pseudocount) so we are not missing data points, or do we exclude the zeros from analysis entirely?
-3. Tail-heavy: an individual microbiome will typically have a few dominant taxa, and many low-abundance taxa. These low-abundance taxa still matter ...
-4. Biased:
+16S rRNA amplicon sequencing generally has good resolution at the *genus* level.
 
 ---
 
-## A basic approach: the center-log ratio (CLR) transform.
+## What statistical tests can we use? 
+
+After all that work, it would be nice if we could just do a t-test. But that would be a bad idea.
+
+Let's talk about why, and what we can do about it.
+
+---
+
+## Let's take a look at the data structure
+
+<img src="assets/example_taxatable.png" width="75%">
+
+Microbiome relative abundance data is:
+- not normally distributed
+- zero-inflated
+- overdispersed: variance not constant
+- compositional: features not independent
+- *biased*
+
+These features cause it to break assumptions of most statistical tests (including non-parametric).
+If we don't address these concerns, we may miss true relationships, or draw incorrect conclusions.
+
+---
+
+## Our data is biased because sequencing is a *random sample*, confounded by variables we cannot measure.
+
+Variation in "sampling fraction" between samples
+Variationin "sequencing efficienty" between bacterial taxa
+
+<img src="assets/microbiome_sampling.png" width="75%">
+
+<div class="footnote">
+
+Cite Amy Willis
+
+---
+
+## We need statistical methods that address these issues
+
+Overview of stat methods from Nature, which includes ANCOM-BC.
+
+Things we may or may not want to do depending upon the method: prevalence filtering, imputing zeros (pseudocounts)
+
+---
+
+## A basic approach: impute + center-log ratio (CLR) transform
+
 
 Show plots of transform, how it goes from weird to normal-ish
-Caveats: dealing with zeroes difficult
+<img src="assets/clr.png" width="75%">
+Caveats: have to either impute or discard data
 
 ---
 
 ## Differential Abundance Analysis in QIIME2 with ANCOM
 
-ANCOM is an R package that has been implemented as a QIIME2 plugin.
+ANCOM-BC is an R package that has been implemented as a QIIME2 plugin.
 Because of this, you can run it from the command line, but it's important to be aware of its assumptions.
+Let's try it out in the notebook!
 
 ---
 
@@ -476,14 +515,15 @@ Noa Rappaport <br>
 
 <div>
 
-Dominic Lewis <br>
-Allison Kudla <br>
+Shanna Braga<br>
+Greg Caporaso <br>
 Audri Hubbard <br>
+Connor Kelly<br>
+Allison Kudla <br>
+Dominic Lewis <br>
 Joe Myxter <br>
 Thea Swanson <br>
 Victoria Uhl<br>
-Connor Kelly<br>
-Shanna Braga<br>
 ISB Facilities Team
 
 </div></div>
