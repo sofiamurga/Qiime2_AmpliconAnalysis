@@ -127,8 +127,6 @@ How do we see what is in the microbiome?
 
 ---
 
-<!-- .slide: data-background="var(--secondary)" class="dark" -->
-
 # QIIME 2: Quantitative Insights into Microbial Ecology
 
 Pronounced like *chime* 🔔
@@ -140,8 +138,7 @@ of Greg Caporaso and Rob Knight.
 analysis package with a focus on data processing and analysis transparency.
 
 QIIME 2 comes with a lot of help, including a wide range of [tutorials](https://docs.qiime2.org/2024.5/tutorials/),
-[general documentation](https://docs.qiime2.org/2024.5/) and a
-[user forum](https://forum.qiime2.org/) where you can ask questions.
+[general documentation](https://docs.qiime2.org/2024.5/) and a [user forum](https://forum.qiime2.org/) where you can ask questions.
 
 ---
 
@@ -156,18 +153,11 @@ It's commonly used via the *command line*. We'll use it within the Colab Noteboo
 
 ---
 
-## QIIME2 uses its own file formats ...
+## QIIME2 Workflow
 
-... but don't let the names scare you 👻
-
-QIIME2 *artifacts* (.qza) are intermediate data (often times tables), while *visualizations* (.qzv) are files specifically formatted for QIIME2 Viewer.
-
-When we run a QIIME2 command, we specify the inputs and *action* to perform, and QIIME2 will output artifacts and/or visualizations.
-
+When we run a QIIME2 command, we specify the inputs and *action* to perform, and QIIME2 will output *artifacts* (.qza) and/or *visualizations* (.qzv).
 
 <img src="assets/key.png" width="50%"><img src="assets/overview.png" width="50%">
-
-Visualizations *cannot* be used as inputs for additional commands
 
 <div class="footnote">
 
@@ -209,35 +199,26 @@ The V4-specific primers used in this study were F515/R806. How long is the ampli
 
 PCR errors including polymerase substitution errors and chimerism are amplified over PCR cycles. Further, next generation sequencing still produces errors.
 
-<img src="assets/chimera.png" width="50%"><img src="assets/seq_error.png" width="50%">
-
-![read overlap](https://gibbons-lab.github.io/isb_course_2024/16S/assets/read_overlap.png)
-
-![chimera](https://gibbons-lab.github.io/isb_course_2024/16S/assets/chimera.png)
+<img src="assets/chimera.png" width="40%"><img src="assets/seq_error.png" width="50%">
 
 ---
 
-## DADA 2 to the rescue!
+## DADA2 to the rescue!
 
 We just ran the DADA2 plugin for QIIME, which is doing 4 things:
 
 1. *filter and trim* the reads
-2. find the most likely *original sequences* in the sample (ASVs)
+    a. trim low quality regions
+    b. remove reads with low average quality
+    c. remove reads with ambiguous bases (Ns)
+    d. remove PhiX (added to sequencing)
+2. find the most likely *original sequences* in the sample (*ASVs*)
 3. remove chimeras
 4. count the abundances
 
-</div>
-
----
-
-## 1. Filter and trim
-
-1. trim low quality regions
-2. remove reads with low average quality
-3. remove reads with ambiguous bases (Ns)
-4. remove PhiX (added to sequencing)
-
 <img src="assets/seq_quality.png" width="50%">
+
+</div>
 
 ---
 
@@ -247,8 +228,8 @@ We just ran the DADA2 plugin for QIIME, which is doing 4 things:
 
 Expectation-Maximization (EM) algorithm simultaneously assigns ASVs and models error.
 
-
-This type of algorithm is an improvement to the previous method of operational taxonomic unit (OTU) construction, which clusters reads that surpass a fixed similarity threshold (often 97%). More information on these methods can be found ![here](https://www.nature.com/articles/ismej2017119)
+<div class="footnote">
+The EM framework of ASV assignment is an improvement to operational taxonomic unit (OTU) construction, which clusters reads that surpass a fixed similarity threshold (often 97%). More information on these methods can be found [here](https://www.nature.com/articles/ismej2017119).
 
 ---
 
@@ -329,9 +310,7 @@ Let's make one!
 
 ## Statistical tests for alpha diversity
 
-Alpha diversity will provide a single value for each sample.
-
-It can be treated as any other sample measurement and is suitable for classic
+Alpha diversity can be treated as any other sample measurement and is suitable for classic
 univariate tests (t-test, Mann-Whitney U test).
 
 ---
@@ -424,9 +403,11 @@ Let's talk about why, and what we can do about it.
 
 ---
 
-## Let's take a look at the data structure
+## Relative abundance data structure
 
-<img src="assets/example_taxatable.png" width="75%">
+<div style="display: flex; justify-content: space-around; align-items: center;">
+
+<div>
 
 Microbiome relative abundance data is:
 - not normally distributed
@@ -435,53 +416,85 @@ Microbiome relative abundance data is:
 - compositional: features not independent
 - *biased*
 
-These features cause it to break assumptions of most statistical tests (including non-parametric).
-If we don't address these concerns, we may miss true relationships, or draw incorrect conclusions.
+</div>
+
+<div>
+
+<img src="assets/microbiome_data_distribution.png" width="75%">
+
+</div></div>
+
+These features violate the assumptions of most statistical tests (including non-parametric).
 
 ---
 
-## Our data is biased because sequencing is a *random sample*, confounded by variables we cannot measure.
+## Sequencing is a *random sample* of an ecosystem
 
-Variation in "sampling fraction" between samples
-Variationin "sequencing efficienty" between bacterial taxa
+*Samples* have different *"sampling fractions"*
 
-<img src="assets/microbiome_sampling.png" width="75%">
+<img src="assets/ancom_sample_fraction.png" width="50%"><img src="assets/absolute_abundance.png" width="50%">
 
 <div class="footnote">
 
-Cite Amy Willis
+Figures from [Lin & Peddada 2020](https://www.nature.com/articles/s41467-020-17041-7) and [Vandeputte et. al. 2017](https://www.nature.com/articles/nature24460)
 
 ---
 
-## We need statistical methods that address these issues
-
-Overview of stat methods from Nature, which includes ANCOM-BC.
-
-Things we may or may not want to do depending upon the method: prevalence filtering, imputing zeros (pseudocounts)
-
----
-
-## A basic approach: impute + center-log ratio (CLR) transform
-
+## However, we can still compare proportions if we *transform the data*
 
 Show plots of transform, how it goes from weird to normal-ish
 <img src="assets/clr.png" width="75%">
-Caveats: have to either impute or discard data
+
+Caveats: have to either impute or discard data. Check out [this blog post](https://cduvallet.github.io/posts/2018/06/fuzzy-zeros) for more information on imputation with zero-inflated compositional data.
+
+- Compositional data transformation using center-log-ratio
 
 ---
 
-## Differential Abundance Analysis in QIIME2 with ANCOM
+## After hypothesis testing, we need to *correct* our p-values
+
+Multiple comparisons inflate the likelihood of false positives!
+- How to correct for multiple testing
+
+---
+
+## ANCOM-BC: Differential Abundance Analysis + Bias Correction in QIIME2
+
+- ANCOM-BC: a QIIME2-compatible DA method that controls for "sampling fraction" bias
 
 ANCOM-BC is an R package that has been implemented as a QIIME2 plugin.
 Because of this, you can run it from the command line, but it's important to be aware of its assumptions.
+
 Let's try it out in the notebook!
 
 ---
 
-## More robust methods
+## Historically, DA methods have lacked consensus
 
-radEmu preprint:
-show example
+A 2022 [meta-analysis](https://www.nature.com/articles/s41467-022-28034-z) showed an alarming lack of consensus between DA methods. Maybe there is another bias confounding sequencing data?
+
+---
+
+## More bias!?
+
+Analysis of bacterial communities with known abundances suggests that *bacterial taxa* have different *"sequencing efficiencies"*, affecting the observed proportions of ALL taxa.<br>
+  → This could be caused by biological differences like variation in average 16S copy number, or experimental procedures<br>
+If each taxon has a sequencing efficiency *B*, between-sample differences in actual abundance (A) get *distorted*
+
+<img src="assets/taxa_bias.jpg" width="75%">
+
+If we don't address these concerns, we may miss true relationships and/or draw incorrect conclusions!
+
+<div class="footnote">
+
+Figure from [McLaren _et. al._ 2019](https://elifesciences.org/articles/46923)
+Expanded manuscript [McLaren _et. al._ 2022](https://mikemc.github.io/differential-abundance-theory/v/7412a36ddb8cad3c1c0f3ff2055f5402c4a74360/index.html)
+---
+
+## But since we have *many* samples, we can *estimate* these biases
+
+- radEmu: an R-based DA method that controls for BOTH "sampling fraction" AND "taxonomic efficiency" biases
+- explanation of this method on youtube, Github has the open-access code, R-package, vignettes, preprint on arXiv
 
 ---
 
