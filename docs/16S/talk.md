@@ -13,7 +13,7 @@ from the *ISB Microbiome Course 2024*
 <a href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fa fa-bullhorn"></i>CC-BY-NC</a>
 <a href="https://gibbons.isbscience.org/"><i class="fa fa-globe"></i>gibbons.isbscience.org</a>
 <a href="https://github.com/gibbons-lab"><i class="fa fa-github"></i>gibbons-lab</a>
-<a href="https://www.linkedin.com/in/alyssa-n-easton-7692b4175"><i class="fa fa-linkedin"></i>Alyssa N Easton</a>
+<a href="https://www.linkedin.com/in/alyssa-n-easton-7692b4175"><i class="fa fa-linkedin-square"></i>Alyssa N Easton</a>
 </div>
 
 ---
@@ -198,10 +198,10 @@ PCR errors including polymerase substitution errors and chimerism are amplified 
 
 We just ran the DADA2 plugin for QIIME, which is doing 4 things:
 
-1. *filter and trim* the reads
-    a. trim low quality regions
-    b. remove reads with low average quality
-    c. remove reads with ambiguous bases (Ns)
+1. *filter and trim* the reads<br>
+    a. trim low quality regions<br>
+    b. remove reads with low average quality<br>
+    c. remove reads with ambiguous bases (Ns)<br>
     d. remove PhiX (added to sequencing)
 2. find the most likely *original sequences* in the sample (*ASVs*)
 3. remove chimeras
@@ -233,8 +233,9 @@ might we be interested in?
 
 ## Diversity metrics
 
-In microbial community analysis we are usually interested in two different families of diversity metrics,
-*alpha diversity* (ecological diversity within a sample) and *beta diversity* (ecological differences between samples).
+In microbial community analysis we are usually interested in two different families of diversity metrics,<br>
+- *alpha diversity* (ecological diversity within a sample)
+- *beta diversity* (ecological differences between samples)
 
 ---
 
@@ -277,7 +278,7 @@ UniFrac distance = branch length
 
 <img src="assets/unifrac.png" width="70%">
 
-Weighted UniFrac *scales* branches by *abundance*, so the presence of one distant member does not skew diversity.
+Weighted UniFrac **scales branches by *abundance**, so the presence of one distant member does not skew diversity.
 
 ---
 
@@ -368,15 +369,9 @@ often provides better *generalization* and faster results.
 
 <!-- .slide: data-background="var(--primary)" class="dark" -->
 
-# Differential Abundance Analysis
+# Differential abundance
 
-How do we know if relative abundance is significantly different between groups?
-
----
-
-## What taxonomic level should we use?
-
-16S rRNA amplicon sequencing generally has good resolution at the *genus* level.
+How can we compare abundance between groups of samples (like case-control)?
 
 ---
 
@@ -387,7 +382,7 @@ How do we know if relative abundance is significantly different between groups?
 <img src="assets/sampling_fraction.png" width="75%">
 
 Even if we knew the concentration of bacteria in a sample, we don't know how much bacterial biomass is in each person.
-What we do know is the *proportions* of the bacteria within a sample (maybe).
+What we do know is the **proportions** of the bacteria **within a sample** (maybe).
 
 <div class="footnote">
 
@@ -395,9 +390,15 @@ Figures from [Vandeputte, 2017](https://www.nature.com/articles/nature24460)
 
 ---
 
+## What taxonomic level should we use?
+
+16S rRNA amplicon sequencing generally has good resolution at the *genus* level.
+
+---
+
 ## What statistical tests can we use?
 
-Before we do any tests, we need to LOOK at the data 🔍
+Before we do any tests, we need to LOOK at the data 🔍<br>
 How is it distributed? What is the variance?
 
 ---
@@ -432,7 +433,9 @@ These features violate the assumptions of parametric statistical tests.
 
 We have a few options:
 - nonparametric, rank-based tests (underpowered)
+
 - *transform* the data, then parametric tests (may require us to discard data)
+
 - more complex statistical models (each with their own caveats + assumptions)
 
 ---
@@ -467,25 +470,20 @@ Check your p-value distribution.
 
 ## Limitations
 
-Analysis of bacterial communities with known abundances suggests that *bacterial taxa* have different *"sequencing efficiencies"*
+Analysis of bacterial communities with known abundances suggests that *bacterial taxa* have different *"sequencing efficiencies"*<br>
   → This could be caused by biological differences like variation in average 16S copy number, or experimental procedures<br>
 
 If each taxon has a sequencing efficiency *B*, between-sample differences in actual abundance (A) get *distorted*
 
-<img src="assets/taxa_bias.jpg" width="75%">
+<img src="assets/taxa_bias.png" width="75%">
 
 If we don't address these concerns, we may miss true relationships and/or draw incorrect conclusions!
+Only one method currently takes this possible bias into account, and that is radEmu, developed by David Claussen and Amy Willis at UW. Preprint, Github
 
 <div class="footnote">
 
-Figure from [McLaren, 2019](https://elifesciences.org/articles/46923)
+Figure from [McLaren, 2019](https://elifesciences.org/articles/46923)<br>
 Expanded manuscript [McLaren, 2022](https://mikemc.github.io/differential-abundance-theory/v/7412a36ddb8cad3c1c0f3ff2055f5402c4a74360/index.html)
----
-
-## But since we have *many* samples, we can *estimate* these biases
-
-- radEmu: an R-based DA method that controls for BOTH "sampling fraction" AND "taxonomic efficiency" biases
-- explanation of this method on youtube, Github has the open-access code, R-package, vignettes, preprint on arXiv
 
 ---
 
@@ -493,7 +491,7 @@ Expanded manuscript [McLaren, 2022](https://mikemc.github.io/differential-abunda
 
 ## Let's try it!
 
-:computer: We will now switch to the notebook to try normalization and statistical testing ourselves.
+:computer: We will now switch to the notebook to do some normalization and statistical testing.
 
 ---
 
