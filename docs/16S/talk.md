@@ -81,19 +81,10 @@ created with *BioRender.com*
 
 ## Why Parkinson's Disease?
 
-Parkinson's Disease (PD) is the *second* most common neurodegenerative disorder, estimated to affect *3* people per *1,000*.
-- PD characterized by degeneration of *dopaminergic* neurons, leading to motor impairment
-- Aggregation of alpha-synuclein leads to cell death and, more broadly, neuroinflammation
+- Parkinson's Disease (PD) is characterized by aggregation of *alpha-synuclein* protein and degeneration of of *dopaminergic* neurons, leading to widespread neuroinflammation and progressive motor impairment.
+- Motor symptoms are often *preceded* by gastrointestinal symptoms like *constipation*, increased gut permeability and inflammation.
 
-Motor symptoms are often *preceded* by gastrointestinal symptoms.
-- PD patients have increased gut epithelial permeability and inflammation
-- The gut microbiota have been shown to affect motor deficits and neuroinflammation in animal models of PD
-
-<div class="footnote">
-
-Add citations - mostly from [meta-analysis](https://www.nature.com/articles/s41531-021-00156-z)
-
-</div>
+Meta-analysis of the Parkinson's Disease Microbiome suggests alterations linked to intestinal inflammation ([Romano et. al. 2021](https://www.nature.com/articles/s41531-021-00156-z))
 
 ---
 
@@ -216,8 +207,6 @@ We just ran the DADA2 plugin for QIIME, which is doing 4 things:
 3. remove chimeras
 4. count the abundances
 
-<img src="assets/seq_quality.png" width="50%">
-
 </div>
 
 ---
@@ -226,14 +215,11 @@ We just ran the DADA2 plugin for QIIME, which is doing 4 things:
 
 <img src="assets/dada2.png" width="80%">
 
-Expectation-Maximization (EM) algorithm simultaneously assigns ASVs and models error.
-
-<div class="footnote">
-The EM framework of ASV assignment is an improvement to operational taxonomic unit (OTU) construction, which clusters reads that surpass a fixed similarity threshold (often 97%). More information on these methods can be found [here](https://www.nature.com/articles/ismej2017119).
+Expectation-Maximization (EM) algorithm simultaneously assigns ASVs and models error ([Callahan, 2016](https://www.nature.com/articles/nmeth.3869#MOESM269)).
 
 ---
 
-DADA2 output a table  now have a table containing the counts for each ASV in each sample.
+We now have a table containing the counts for each ASV in each sample.
 We also have a list of ASVs.
 
 <br>
@@ -265,7 +251,7 @@ How diverse is a single sample?
 - *mixtures*: metrics that combine both richness and evenness<br>
   → Shannon Index, Simpson's Index
 
-Each sample has *1* Shannon Index.
+Each sample has **1** Shannon Index.
 
 ---
 
@@ -280,8 +266,7 @@ How different are two or more samples/donors/sites from one another other?
 - *weighted:* do shared taxa have *similar abundances*?<br>
   → Bray-Curtis distance, weighted UniFrac
 
-Each sample has *n* Bray-Curtis distances, where n = number of samples.
-Therefore, beta-diversity is a *matrix*
+Each sample has **n** Bray-Curtis distances, where n = number of samples.
 
 ---
 
@@ -395,90 +380,96 @@ How do we know if relative abundance is significantly different between groups?
 
 ---
 
-## What statistical tests can we use? 
+## PSA: Sequencing is a *random sample* of an ecosystem
 
-After all that work, it would be nice if we could just do a t-test. But that would be a bad idea.
+*"Sampling fraction"* varies between samples.
 
-Let's talk about why, and what we can do about it.
+<img src="assets/sampling_fraction.png" width="75%">
+
+Even if we knew the concentration of bacteria in a sample, we don't know how much bacterial biomass is in each person.
+What we do know is the *proportions* of the bacteria within a sample (maybe).
+
+<div class="footnote">
+
+Figures from [Vandeputte, 2017](https://www.nature.com/articles/nature24460)
+
+---
+
+## What statistical tests can we use?
+
+Before we do any tests, we need to LOOK at the data 🔍
+How is it distributed? What is the variance?
 
 ---
 
 ## Relative abundance data structure
 
-<div style="display: flex; justify-content: space-around; align-items: center;">
+<div style="display: flex; justify-content: space-around; align-items: center; height: 100%">
 
-<div>
+<div style="width: 50%; padding: 10px;">
 
 Microbiome relative abundance data is:
+- compositional
 - not normally distributed
-- zero-inflated
-- overdispersed: variance not constant
-- compositional: features not independent
-- *biased*
+- zero-inflated: contains both true and sampling zeros
+- more variable than expected by a Poisson model (overdispersed)
+- heteroscedastic
 
 </div>
 
-<div>
+<div style="width: 50%; text-align:center; padding: 10px;">
 
-<img src="assets/microbiome_data_distribution.png" width="75%">
+<img src="assets/rel_abund_histogram.png" width="75%">
 
-</div></div>
+</div>
+</div>
 
-These features violate the assumptions of most statistical tests (including non-parametric).
-
----
-
-## Sequencing is a *random sample* of an ecosystem
-
-*Samples* have different *"sampling fractions"*
-
-<img src="assets/ancom_sample_fraction.png" width="50%"><img src="assets/absolute_abundance.png" width="50%">
-
-<div class="footnote">
-
-Figures from [Lin & Peddada 2020](https://www.nature.com/articles/s41467-020-17041-7) and [Vandeputte et. al. 2017](https://www.nature.com/articles/nature24460)
+These features violate the assumptions of parametric statistical tests.
 
 ---
 
-## However, we can still compare proportions if we *transform the data*
+## So what can we do?
 
-Show plots of transform, how it goes from weird to normal-ish
+We have a few options:
+- nonparametric, rank-based tests (underpowered)
+- *transform* the data, then parametric tests (may require us to discard data)
+- more complex statistical models (each with their own caveats + assumptions)
+
+---
+
+## Wilcoxon Rank-Sum Test (a.k.a. Mann-Whitney U test)
+
+- Nonparametric test for difference in a continuous variable between two groups
+- Uses *ranks*, rather than counts
+- Underpowered, because we are not assuming an ideal distribution shape
+
+<img src="assets/RA_split_dist.png" width="75%">
+
+---
+
+## Normalization + Parametric tests
+
+The center-log ratio transform (Aitchison, 1982), is a transformation for compositional data that normalizes by the *sample geometric mean*, which is less sensitive to outliers and gives more weight to smaller values.
+
 <img src="assets/clr.png" width="75%">
 
-Caveats: have to either impute or discard data. Check out [this blog post](https://cduvallet.github.io/posts/2018/06/fuzzy-zeros) for more information on imputation with zero-inflated compositional data.
-
-- Compositional data transformation using center-log-ratio
+The caveat: zeros are still a problem. We can either impute them somehow, or discard them. Check out [this blog post](https://cduvallet.github.io/posts/2018/06/fuzzy-zeros) for more information on imputation with zero-inflated compositional data.
 
 ---
 
 ## After hypothesis testing, we need to *correct* our p-values
 
 Multiple comparisons inflate the likelihood of false positives!
-- How to correct for multiple testing
+
+Check your p-value distribution.
 
 ---
 
-## ANCOM-BC: Differential Abundance Analysis + Bias Correction in QIIME2
+## Limitations
 
-- ANCOM-BC: a QIIME2-compatible DA method that controls for "sampling fraction" bias
-
-ANCOM-BC is an R package that has been implemented as a QIIME2 plugin.
-Because of this, you can run it from the command line, but it's important to be aware of its assumptions.
-
-Let's try it out in the notebook!
-
----
-
-## Historically, DA methods have lacked consensus
-
-A 2022 [meta-analysis](https://www.nature.com/articles/s41467-022-28034-z) showed an alarming lack of consensus between DA methods. Maybe there is another bias confounding sequencing data?
-
----
-
-## More bias!?
-
-Analysis of bacterial communities with known abundances suggests that *bacterial taxa* have different *"sequencing efficiencies"*, affecting the observed proportions of ALL taxa.<br>
+Analysis of bacterial communities with known abundances suggests that *bacterial taxa* have different *"sequencing efficiencies"*
   → This could be caused by biological differences like variation in average 16S copy number, or experimental procedures<br>
+
 If each taxon has a sequencing efficiency *B*, between-sample differences in actual abundance (A) get *distorted*
 
 <img src="assets/taxa_bias.jpg" width="75%">
@@ -487,8 +478,8 @@ If we don't address these concerns, we may miss true relationships and/or draw i
 
 <div class="footnote">
 
-Figure from [McLaren _et. al._ 2019](https://elifesciences.org/articles/46923)
-Expanded manuscript [McLaren _et. al._ 2022](https://mikemc.github.io/differential-abundance-theory/v/7412a36ddb8cad3c1c0f3ff2055f5402c4a74360/index.html)
+Figure from [McLaren, 2019](https://elifesciences.org/articles/46923)
+Expanded manuscript [McLaren, 2022](https://mikemc.github.io/differential-abundance-theory/v/7412a36ddb8cad3c1c0f3ff2055f5402c4a74360/index.html)
 ---
 
 ## But since we have *many* samples, we can *estimate* these biases
@@ -498,7 +489,19 @@ Expanded manuscript [McLaren _et. al._ 2022](https://mikemc.github.io/differenti
 
 ---
 
-## Your turn
+<!-- .slide: data-background="var(--primary)" class="dark" -->
+
+## Let's try it!
+
+:computer: We will now switch to the notebook to try normalization and statistical testing ourselves.
+
+---
+
+## In conclusion, always look at your data!
+
+---
+
+## Your turn!
 
 Which taxa are associated with the disease state?
 
