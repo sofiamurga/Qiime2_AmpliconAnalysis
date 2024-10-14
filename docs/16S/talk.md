@@ -102,11 +102,14 @@ Meta-analysis of the Parkinson's Disease Microbiome suggests alterations linked 
 
 ## Today's dataset:
 
-Case-control observational study of PD including 16S rRNA sequencing of stool, demographic information, health history, and medication ([Hill-Burns et. al., 2017](https://movementdisorders.onlinelibrary.wiley.com/doi/10.1002/mds.26942)), which was later included in a 2021 meta-analysis ([Romano et. al. 2021](https://www.nature.com/articles/s41531-021-00156-z)).
+Case-control observational study of PD ([Hill-Burns et. al., 2017](https://movementdisorders.onlinelibrary.wiley.com/doi/10.1002/mds.26942)), which was later included in a 2021 meta-analysis ([Romano et. al. 2021](https://www.nature.com/articles/s41531-021-00156-z)).
 
 - 197 PD cases, 130 healthy controls
+
 - 16S rRNA Amplicon sequencing of stool
+
 - included demographic information, health history, and medication use
+
 - found small (but significant) independent effects of PD and PD drugs on microbiome composition
 
 Today, we'll process a *small subset* of the original data: 5 PD patients and 5 healthy controls.
@@ -312,7 +315,9 @@ Let's make one!
 ## Statistical tests for alpha diversity
 
 Alpha diversity can be treated as any other sample measurement and is suitable for *classic univariate tests*.<br>
+
     → Nonparametric: Mann-Whitney U test<br>
+
     → Parametric: t-test
 
 ---
@@ -427,19 +432,25 @@ How is it distributed? What is the variance?
 
 <div style="display: flex; justify-content: space-around; align-itens:center;">
 
-<div style="width: 50%;">
+<div style="width: 40%;">
 
 Microbiome relative abundance data is:
 
 - compositional
+
 - not normally distributed
+
 - zero-inflated: contains both true and sampling zeros
+
 - more variable than expected by a Poisson model (overdispersed)
+
 - heteroscedastic
+
+These features violate the assumptions of parametric statistical tests.
 
 </div>
 
-<img src="assets/rel_abund_histogram.png" width="50%" style="margin-left: 10px;">
+<img src="assets/rel_abund_histogram.png" width="60%" style="margin-left: 10px;">
 
 </div>
 
@@ -463,7 +474,7 @@ We have a few options:
 
 <div style="display: flex; justify-content: space-between; align-items: center;">
 
-<div style="width: 50%;">
+<div style="width: 40%;">
 
 - *Nonparametric* test for difference in a continuous variable between two groups
 
@@ -473,7 +484,7 @@ We have a few options:
 
 </div>
 
-<img src="assets/RA_split_dist.png" width="50%" style="margin-left: 10px;">
+<img src="assets/RA_split_dist.png" width="50%" style="margin-left: 20px;">
 
 </div>
 
@@ -493,7 +504,15 @@ The caveat: zeros are still a problem. We can either *impute or discard* them.
 
 <div style="display: flex; justify-content: space-between; align-items: center;">
 
-<img src="assets/p_val_adjust.png" width="30%" style="margin-left: 10px;">
+<div style="width: 50%;">
+
+- We perform p-value correction to minimize the false discovery rate (FDR).
+
+- We also look at the pre-correction p-value distribution as a sanity check.
+
+</div>
+
+<img src="assets/p_val_adjust.png" width="50%" style="margin-left: 10px;"><br>
 
 <div class="footnote">
 
@@ -501,13 +520,6 @@ Figure from [Genevia Technologies](https://geneviatechnologies.com/blog/what-is-
 
 </div>
 
-<div style="width: 60%;">
-
-We perform p-value correction to minimize the false discovery rate (FDR).
-
-We also look at the pre-correction p-value distribution as a sanity check.
-
-</div>
 </div>
 
 ---
@@ -516,16 +528,17 @@ We also look at the pre-correction p-value distribution as a sanity check.
 
 <div style="display: flex; justify-content: space-between; align-items: center;">
 
-<div style="width: 50%;">
+<div style="width: 40%;">
 
 Analysis of synthetic communities suggests that *bacterial taxa* have different *sequencing efficiencies*,
 which can distort differences in abundance ([McLaren et. al., 2019](https://elifesciences.org/articles/46923)).
 
-A new method that accounts for this bias is currently in review. radEmu, developed by David Claussen and Amy Willis at UW, is available as an R package on [Github](https://github.com/statdivlab/radEmu).
+
+A new method that accounts for this bias is currently in review. *radEmu*, developed by David Clausen and Amy Willis at UW, is available as an R package on [Github](https://github.com/statdivlab/radEmu).
 
 </div>
 
-<img src="assets/taxa_bias.png" width="50%" style="margin-left: 5px;">
+<img src="assets/taxa_bias.png" width="60%" style="margin-left: 10px;">
 
 </div>
 
