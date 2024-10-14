@@ -422,9 +422,7 @@ How is it distributed? What is the variance?
 
 ## Relative abundance data structure
 
-<div style="display: flex; justify-content: space-around; align-items: center; height: 100%">
-
-<div style="width: 40%; padding: 5px;">
+<div style="display: flex; justify-content: space-around; align-items: center; width: 40%; padding: 5px;">
 
 Microbiome relative abundance data is:
 - compositional
@@ -435,12 +433,12 @@ Microbiome relative abundance data is:
 
 </div>
 
-<div style="width: 40%; padding: 5px;">
+<div style="width: 50%; padding: 5px;">
 
 <img src="assets/rel_abund_histogram.png", width="60%">
 
 </div>
-</div>
+
 <br>
 These features violate the assumptions of parametric statistical tests.
 
@@ -449,31 +447,26 @@ These features violate the assumptions of parametric statistical tests.
 ## So what can we do?
 
 We have a few options:
-- nonparametric, rank-based tests (underpowered)
+1. Use raw relative abundance data; run nonparametric, rank-based tests (underpowered)
 
-- *transform* the data, then parametric tests (may require us to discard data)
+2. Transform data (will require us to impute or discard zeros); run parametric tests
 
-- more complex statistical models (each with their own caveats + assumptions)
+3. Use a more complex modeling package (each with their own caveats + assumptions)
 
 ---
 
 ## Wilcoxon Rank-Sum Test (a.k.a. Mann-Whitney U test)
 
-<div style="display: flex; justify-content: space-around; align-items: center; height: 100%">
+<div style="display: flex; justify-content: space-around; align-items: center; width: 40%; padding: 5px">
 
-<div style="width: 40%; padding: 5px;">
-
-- Nonparametric test for difference in a continuous variable between two groups
+- *Nonparametric* test for difference in a continuous variable between two groups
 - Uses *ranks*, rather than counts
-- Underpowered, because we are not assuming an ideal distribution shape
+- *Underpowered*, because we are not assuming an ideal distribution shape
 
 </div>
 
-<div style="width: 40%; padding: 5px;">
+<img src="assets/RA_split_dist.png", width="50%">
 
-<img src="assets/RA_split_dist.png", width="60%">
-
-</div>
 </div>
 
 ---
@@ -490,26 +483,24 @@ The caveat: zeros are still a problem. We can either *impute or discard* them.
 
 ## After hypothesis testing, we need to *correct* our p-values
 
-<div style="display: flex; justify-content: space-around; align-items: center; height: 100%">
-
 <div style="width: 40%; padding: 5px;">
 
 <img src="assets/p_val_adjust.png", width="60%">
 
+<div class="footnote">
+
+Figure from [Genevia Technologies](https://geneviatechnologies.com/blog/what-is-multiple-testing-correction/)
+
+</div>
 </div>
 
-<div style="width: 40%; padding: 5px;">
+<div style="display: flex; justify-content: space-around; align-items: center; width: 40%; padding: 5px">
 
 We perform p-value correction to minimize the false discovery rate (FDR).
 
 We also look at the pre-correction p-value distribution as a sanity check.
 
 </div>
-</div>
-
-<div class="footnote">
-
-Figure from [Genevia Technologies](https://geneviatechnologies.com/blog/what-is-multiple-testing-correction/)
 
 ---
 
