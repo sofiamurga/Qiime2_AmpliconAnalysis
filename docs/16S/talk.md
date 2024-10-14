@@ -13,7 +13,6 @@ from the *ISB Microbiome Course 2024*
 <a href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fa fa-bullhorn"></i>CC-BY-NC</a>
 <a href="https://gibbons.isbscience.org/"><i class="fa fa-globe"></i>gibbons.isbscience.org</a>
 <a href="https://github.com/gibbons-lab"><i class="fa fa-github"></i>gibbons-lab</a>
-<a href="https://www.linkedin.com/in/alyssa-n-easton-7692b4175"><i class="fa fa-linkedin-square"></i>Alyssa's LinkedIn</a>
 </div>
 
 ---
@@ -71,33 +70,51 @@ In case you get lost, *all* output we generate can be found on [Github](https://
 
 ## The Gut-Brain Axis
 
-<div style="display: flex; justify-content: space-around; align-items: center; height: 100%">
 <img src="assets/gut_brain_axis.jpeg" height="100%">
-</div>
+
 <div class="footnote">
 created with *BioRender.com*
 </div>
 
 ---
 
+<div style="display: flex; justify-content: space-between; align-items: center">
+
+<div>
+
 ## Why Parkinson's Disease?
 
 - Parkinson's Disease (PD) is characterized by aggregation of *alpha-synuclein* protein and degeneration of of *dopaminergic* neurons, leading to widespread neuroinflammation and progressive motor impairment.
 - Motor symptoms are often *preceded* by gastrointestinal symptoms like *constipation*, increased gut permeability and inflammation.
 
+</div>
+
+ <img src="assets/gut-brain-parkinson.png" width="50%">
+
+</div>
+
 Meta-analysis of the Parkinson's Disease Microbiome suggests alterations linked to intestinal inflammation ([Romano et. al. 2021](https://www.nature.com/articles/s41531-021-00156-z))
+
+<div class="footnote">
+[Figure from Lorente-Picón & Laguna, 2021](https://doi.org/10.3390/biom11030433)
+</div>
 
 ---
 
-## Analyzing gut microbial composition in Parkinson's Disease (PD)
+## Today's dataset:
 
-In a 2017 [study](https://movementdisorders.onlinelibrary.wiley.com/doi/10.1002/mds.26942), *Hill-Burns et. al.* performed 16S rRNA sequencing of DNA extracted from the stool of 197 PD cases and 130 controls. Using tools like QIIME, they identified small but significant effects of Parkinson's Disease and common PD medications on the gut microbiome. 
+Case-control observational study of PD including 16S rRNA sequencing of stool, demographic information, health history, and medication ([Hill-Burns et. al., 2017](https://movementdisorders.onlinelibrary.wiley.com/doi/10.1002/mds.26942)), which was later included in a 2021 meta-analysis ([Romano et. al. 2021](https://www.nature.com/articles/s41531-021-00156-z)).
 
-[Free full-text manuscript available at Europe PMC](https://europepmc.org/article/PMC/5469442)
+- 197 PD cases, 130 healthy controls
+- 16S rRNA Amplicon sequencing of stool
+- included demographic information, health history, and medication use
+- found small (but significant) independent effects of PD and PD drugs on microbiome composition
 
-This data was later included in a 2021 [meta-analysis](https://www.nature.com/articles/s41531-021-00156-z) of PD-microbiome data
+Today, we'll process a *small subset* of the original data: 5 PD patients and 5 healthy controls.
 
-Today, we'll look at a *small subset* of the original data: 5 Parkinson's Disease patients and 5 healthy controls.
+<div class="footnote">
+[Free full-text manuscript of Hill-Burns, 2017 available at Europe PMC](https://europepmc.org/article/PMC/5469442)
+</div>
 
 ---
 
@@ -418,7 +435,7 @@ Microbiome relative abundance data is:
 
 </div>
 
-<div style="width: 40%; text-align:center; padding: 5px;">
+<div style="width: 40%; padding: 5px;">
 
 <img src="assets/rel_abund_histogram.png", width="60%">
 
@@ -452,7 +469,7 @@ We have a few options:
 
 </div>
 
-<div style="width: 40%; text-align:center; padding: 5px;">
+<div style="width: 40%; padding: 5px;">
 
 <img src="assets/RA_split_dist.png", width="60%">
 
@@ -465,7 +482,7 @@ We have a few options:
 
 The center-log ratio (CLR) transform (Aitchison, 1982), is a transformation for compositional data that normalizes by the *sample geometric mean*, which is less sensitive to outliers and gives more weight to smaller values.
 
-<img src="assets/clr_trim.png" width="75%">
+<img src="assets/clr_trim.png" width="100%">
 
 The caveat: zeros are still a problem. We can either *impute or discard* them.
 
@@ -475,7 +492,7 @@ The caveat: zeros are still a problem. We can either *impute or discard* them.
 
 <div style="display: flex; justify-content: space-around; align-items: center; height: 100%">
 
-<div style="width: 40%; text-align:center; padding: 5px;">
+<div style="width: 40%; padding: 5px;">
 
 <img src="assets/p_val_adjust.png", width="60%">
 
@@ -483,9 +500,9 @@ The caveat: zeros are still a problem. We can either *impute or discard* them.
 
 <div style="width: 40%; padding: 5px;">
 
-We perform p-value correction to minimize the false discovery rate (FDR)
+We perform p-value correction to minimize the false discovery rate (FDR).
 
-We should also look at the p-value distribution to make sure no human errors were made along this processing pipeline.
+We also look at the pre-correction p-value distribution as a sanity check.
 
 </div>
 </div>
@@ -501,7 +518,7 @@ Figure from [Genevia Technologies](https://geneviatechnologies.com/blog/what-is-
 Analysis of synthetic communities suggests that *bacterial taxa* have different *sequencing efficiencies*,
 which can distort differences in abundance ([McLaren et. al., 2019](https://elifesciences.org/articles/46923)).
 
-<div style="display: flex; justify-content: space-between; align-items: center">
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 5px;">
 
 <img src="assets/taxa_bias.png" width="50%" >
 
@@ -519,7 +536,7 @@ A new method that accounts for this bias is currently in review. radEmu, develop
 
 ---
 
-## In conclusion, always look at your data!
+## In conclusion, always look at your processed data!
 
 ---
 
