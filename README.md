@@ -29,7 +29,6 @@ A [PDF version](https://github.com/Gibbons-Lab/isb_course_2024/blob/main/docs/16
 ## Part 2: Predicting microbiome activity in the context of Parkinson's disease with metabolic models
 
 Presentation: [![part 2](https://img.shields.io/website?up_color=green&up_message=up&label=part%202&url=https%3A%2F%2Fgibbons-lab.github.io%2Fisb_course_2024%2Fmicom)](https://gibbons-lab.github.io/isb_course_2024/micom)
-
 Notebook: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Gibbons-Lab/isb_course_2024/blob/main/micom_2024.ipynb)
 
 You can see the actual workshop walkthrough at
