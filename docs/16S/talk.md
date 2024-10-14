@@ -188,9 +188,7 @@ The V4-specific primers used in this study were F515/R806. How long is the ampli
 
 ## Errors during PCR and sequencing generate *noise*
 
-PCR errors including polymerase substitution errors and chimerism are amplified over PCR cycles. Further, next generation sequencing still produces errors.
-
-<img src="assets/chimera.png" width="40%"><img src="assets/seq_error.png" width="50%">
+<img src="assets/pcr_seq_errors.png" width="80%">
 
 ---
 
@@ -205,7 +203,7 @@ We just ran the DADA2 plugin for QIIME, which is doing 4 things:
     d. remove PhiX (added to sequencing)
 2. find the most likely *original sequences* in the sample (*ASVs*)
 3. remove chimeras
-4. count the abundances
+4. count ASV abundances
 
 </div>
 
@@ -233,7 +231,7 @@ might we be interested in?
 
 ## Diversity metrics
 
-In microbial community analysis we are usually interested in two different families of diversity metrics,<br>
+In microbial community analysis we are usually interested in two different families of diversity metrics:<br>
 - *alpha diversity* (ecological diversity within a sample)
 - *beta diversity* (ecological differences between samples)
 
@@ -271,14 +269,14 @@ Each sample has **n** Bray-Curtis distances, where n = number of samples.
 
 ---
 
-### UniFrac
+### UniFrac beta diversity
 
 Do samples share *genetically similar* taxa?
 UniFrac distance = branch length
 
 <img src="assets/unifrac.png" width="70%">
 
-Weighted UniFrac **scales branches by *abundance**, so the presence of one distant member does not skew diversity.
+Weighted UniFrac **scales branches by abundance**, so the presence of one distant member does not skew diversity.
 
 ---
 
@@ -296,13 +294,14 @@ Let's make one!
 
 ## Statistical tests for alpha diversity
 
-Alpha diversity can be treated as any other sample measurement and is suitable for classic
-univariate tests (t-test, Mann-Whitney U test).
+Alpha diversity can be treated as any other sample measurement and is suitable for *classic univariate tests*.
+    → Nonparametric: Mann-Whitney U test
+    → Parametric: t-test
 
 ---
 
 
-## Principal Coordinate Analysis
+## Visualizing beta diversity with PCoA
 
 <img src="assets/pcoa.png" width="100%">
 
@@ -377,7 +376,7 @@ How can we compare abundance between groups of samples (like case-control)?
 
 ## PSA: Sequencing is a *random sample* of an ecosystem
 
-*"Sampling fraction"* varies between samples.
+*Sampling fraction* varies between samples.
 
 <img src="assets/sampling_fraction.png" width="75%">
 
@@ -407,7 +406,7 @@ How is it distributed? What is the variance?
 
 <div style="display: flex; justify-content: space-around; align-items: center; height: 100%">
 
-<div style="width: 50%; padding: 10px;">
+<div style="width: 40%; padding: 5px;">
 
 Microbiome relative abundance data is:
 - compositional
@@ -418,9 +417,9 @@ Microbiome relative abundance data is:
 
 </div>
 
-<div style="width: 50%; text-align:center; padding: 10px;">
+<div style="width: 40%; text-align:center; padding: 5px;">
 
-<img src="assets/rel_abund_histogram.png" width="75%">
+<img src="assets/rel_abund_histogram.png">
 
 </div>
 </div>
@@ -470,15 +469,13 @@ Check your p-value distribution.
 
 ## Limitations
 
-Analysis of bacterial communities with known abundances suggests that *bacterial taxa* have different *"sequencing efficiencies"*<br>
-  → This could be caused by biological differences like variation in average 16S copy number, or experimental procedures<br>
+Analysis of synthetic communities suggests that *bacterial taxa* have different *sequencing efficiencies*<br>
 
 If each taxon has a sequencing efficiency *B*, between-sample differences in actual abundance (A) get *distorted*
 
-<img src="assets/taxa_bias.png" width="75%">
+<img src="assets/taxa_bias.png" width="50%">
 
-If we don't address these concerns, we may miss true relationships and/or draw incorrect conclusions!
-Only one method currently takes this possible bias into account, and that is radEmu, developed by David Claussen and Amy Willis at UW. Preprint, Github
+Only one method currently takes this possible bias into account; radEmu (developed by David Claussen and Amy Willis at UW) is currently in review, but the R package is available on [Github]()
 
 <div class="footnote">
 
