@@ -410,7 +410,7 @@ Finally, once we're done looking at our output, it'll be your turn to jump in th
 
 Alyssa Easton <br>
 Sean Gibbons <br>
-Noa Rappaport <be>
+Noa Rappaport <br>
 Jacob Cavon <br>
 Crystal Perez <br>
 Nick Quinn-Bohmann <br>
