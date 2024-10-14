@@ -435,7 +435,7 @@ Microbiome relative abundance data is:
 
 <div style="width: 50%; padding: 5px;">
 
-<img src="assets/rel_abund_histogram.png", width="60%">
+<img src="assets/rel_abund_histogram.png" width="60%">
 
 </div>
 
@@ -465,7 +465,7 @@ We have a few options:
 
 </div>
 
-<img src="assets/RA_split_dist.png", width="50%">
+<img src="assets/RA_split_dist.png" width="50%">
 
 </div>
 
@@ -485,7 +485,7 @@ The caveat: zeros are still a problem. We can either *impute or discard* them.
 
 <div style="width: 40%; padding: 5px;">
 
-<img src="assets/p_val_adjust.png", width="60%">
+<img src="assets/p_val_adjust.png" width="60%">
 
 <div class="footnote">
 
@@ -513,7 +513,7 @@ which can distort differences in abundance ([McLaren et. al., 2019](https://elif
 
 <img src="assets/taxa_bias.png" width="50%" >
 
-A new method that accounts for this bias is currently in review. radEmu, developed by  David Claussen and Amy Willis at UW, is available as an R package on [Github](https://github.com/statdivlab/radEmu).
+A new method that accounts for this bias is currently in review. radEmu, developed by David Claussen and Amy Willis at UW, is available as an R package on [Github](https://github.com/statdivlab/radEmu).
 
 </div>
 
