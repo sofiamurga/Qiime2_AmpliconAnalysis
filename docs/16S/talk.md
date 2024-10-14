@@ -69,7 +69,9 @@ In case you get lost, *all* output we generate can be found on [Github](https://
 ---
 
 ## The Gut-Brain Axis
-<img src="assets/gut_brain_axis.jpeg" height="90%">
+
+<img src="assets/gut_brain_axis.jpeg" height="75%">
+
 <div class="footnote">
 created with *BioRender.com*
 </div>
@@ -450,12 +452,9 @@ These features violate the assumptions of parametric statistical tests.
 
 </div>
 
-<img src="assets/rel_abund_histogram.png" width="60%" style="margin-left: 10px;">
+<img src="assets/rel_abund_histogram.png" width="50%" style="margin-left: 10px;">
 
 </div>
-
-<br>
-These features violate the assumptions of parametric statistical tests.
 
 ---
 
@@ -514,11 +513,11 @@ The caveat: zeros are still a problem. We can either *impute or discard* them.
 
 <img src="assets/p_val_adjust.png" width="50%" style="margin-left: 10px;"><br>
 
+</div>
+
 <div class="footnote">
 
 Figure from [Genevia Technologies](https://geneviatechnologies.com/blog/what-is-multiple-testing-correction/)
-
-</div>
 
 </div>
 
@@ -526,19 +525,22 @@ Figure from [Genevia Technologies](https://geneviatechnologies.com/blog/what-is-
 
 ## Limitations
 
+The assumption that taxonomic proportions of an ecosystem are conserved in sequencing data may not be true.
+
 <div style="display: flex; justify-content: space-between; align-items: center;">
 
 <div style="width: 40%;">
 
-Analysis of synthetic communities suggests that *bacterial taxa* have different *sequencing efficiencies*,
+Analysis of defined bacterial communities suggests that *bacterial taxa* have different *sequencing efficiencies*,
 which can distort differences in abundance ([McLaren et. al., 2019](https://elifesciences.org/articles/46923)).
 
+<br><br>
 
 A new method that accounts for this bias is currently in review. *radEmu*, developed by David Clausen and Amy Willis at UW, is available as an R package on [Github](https://github.com/statdivlab/radEmu).
 
 </div>
 
-<img src="assets/taxa_bias.png" width="60%" style="margin-left: 10px;">
+<img src="assets/taxa_bias.png" width="60%" style="margin-left: 20px;">
 
 </div>
 
