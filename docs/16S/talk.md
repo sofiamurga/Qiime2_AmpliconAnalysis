@@ -69,34 +69,33 @@ In case you get lost, *all* output we generate can be found on [Github](https://
 ---
 
 ## The Gut-Brain Axis
-
-<img src="assets/gut_brain_axis.jpeg" height="100%">
-
+<img src="assets/gut_brain_axis.jpeg" height="90%">
 <div class="footnote">
 created with *BioRender.com*
 </div>
 
 ---
 
+## Why Parkinson's Disease?
+
 <div style="display: flex; justify-content: space-between; align-items: center">
 
-<div>
-
-## Why Parkinson's Disease?
+<div style="width: 50%;">
 
 - Parkinson's Disease (PD) is characterized by aggregation of *alpha-synuclein* protein and degeneration of of *dopaminergic* neurons, leading to widespread neuroinflammation and progressive motor impairment.
 - Motor symptoms are often *preceded* by gastrointestinal symptoms like *constipation*, increased gut permeability and inflammation.
 
 </div>
 
- <img src="assets/gut-brain-parkinson.png" width="50%">
+<img src="assets/gut-brain-parkinson.png" width="40%" style="margin-left:10px">
 
 </div>
 
-Meta-analysis of the Parkinson's Disease Microbiome suggests alterations linked to intestinal inflammation ([Romano et. al. 2021](https://www.nature.com/articles/s41531-021-00156-z))
+Meta-analysis of the Parkinson's Disease Microbiome suggests alterations linked to intestinal inflammation <br>
+([Romano et. al. 2021](https://www.nature.com/articles/s41531-021-00156-z))
 
 <div class="footnote">
-[Figure from Lorente-Picón & Laguna, 2021](https://doi.org/10.3390/biom11030433)
+    Figure from <a href="https://doi.org/10.3390/biom11030433">Lorente-Picón & Laguna, 2021</a>
 </div>
 
 ---
@@ -113,7 +112,7 @@ Case-control observational study of PD including 16S rRNA sequencing of stool, d
 Today, we'll process a *small subset* of the original data: 5 PD patients and 5 healthy controls.
 
 <div class="footnote">
-[Free full-text manuscript of Hill-Burns, 2017 available at Europe PMC](https://europepmc.org/article/PMC/5469442)
+    Free full-text manuscript of Hill-Burns, 2017 available at <a href="https://europepmc.org/article/PMC/5469442">Europe PMC</a>
 </div>
 
 ---
@@ -312,8 +311,8 @@ Let's make one!
 
 ## Statistical tests for alpha diversity
 
-Alpha diversity can be treated as any other sample measurement and is suitable for *classic univariate tests*.
-    → Nonparametric: Mann-Whitney U test
+Alpha diversity can be treated as any other sample measurement and is suitable for *classic univariate tests*.<br>
+    → Nonparametric: Mann-Whitney U test<br>
     → Parametric: t-test
 
 ---
@@ -392,14 +391,18 @@ How can we compare abundance between groups of samples (like case-control)?
 
 ---
 
-## PSA: Sequencing is a *random sample* of an ecosystem
+## Sequencing is a *random sample* of an ecosystem
 
 *Sampling fraction* varies between samples.
 
+<div style="text-align: center;">
+
 <img src="assets/sampling_fraction.png" width="75%">
 
+</div>
+
 Even if we knew the concentration of bacteria in a sample, we don't know how much bacterial biomass is in each person.
-What we do know is the **proportions** of the bacteria **within a sample** (maybe).
+What we do know is the **proportions** of the bacteria **within a sample** (assuming these are not confounded by a taxon-specific sequencing bias).
 
 <div class="footnote">
 
@@ -422,9 +425,12 @@ How is it distributed? What is the variance?
 
 ## Relative abundance data structure
 
-<div style="display: flex; justify-content: space-around; align-items: center; width: 40%; padding: 5px;">
+<div style="display: flex; justify-content: space-around; align-itens:center;">
+
+<div style="width: 50%;">
 
 Microbiome relative abundance data is:
+
 - compositional
 - not normally distributed
 - zero-inflated: contains both true and sampling zeros
@@ -433,9 +439,7 @@ Microbiome relative abundance data is:
 
 </div>
 
-<div style="width: 50%; padding: 5px;">
-
-<img src="assets/rel_abund_histogram.png" width="60%">
+<img src="assets/rel_abund_histogram.png" width="50%" style="margin-left: 10px;">
 
 </div>
 
@@ -447,25 +451,29 @@ These features violate the assumptions of parametric statistical tests.
 ## So what can we do?
 
 We have a few options:
-1. Use raw relative abundance data; run nonparametric, rank-based tests (underpowered)
+1. Use *relative abundance* data; run **nonparametric, rank-based tests** (underpowered)
 
-2. Transform data (will require us to impute or discard zeros); run parametric tests
+2. *Transform data* (will require us to impute or discard zeros); run **parametric tests**
 
 3. Use a more complex modeling package (each with their own caveats + assumptions)
 
 ---
 
-## Wilcoxon Rank-Sum Test (a.k.a. Mann-Whitney U test)
+## Wilcoxon Rank-Sum Test  (a.k.a. Mann-Whitney U test)
 
-<div style="display: flex; justify-content: space-around; align-items: center; width: 40%; padding: 5px">
+<div style="display: flex; justify-content: space-between; align-items: center;">
+
+<div style="width: 50%;">
 
 - *Nonparametric* test for difference in a continuous variable between two groups
+
 - Uses *ranks*, rather than counts
+
 - *Underpowered*, because we are not assuming an ideal distribution shape
 
 </div>
 
-<img src="assets/RA_split_dist.png" width="50%">
+<img src="assets/RA_split_dist.png" width="50%" style="margin-left: 10px;>
 
 </div>
 
@@ -473,7 +481,7 @@ We have a few options:
 
 ## Normalization + Parametric tests
 
-The center-log ratio (CLR) transform (Aitchison, 1982), is a transformation for compositional data that normalizes by the *sample geometric mean*, which is less sensitive to outliers and gives more weight to smaller values.
+The center-log ratio (*CLR*) transform (Aitchison, 1982), is a transformation for compositional data that normalizes by the *sample geometric mean*, which is less sensitive to outliers and gives more weight to smaller values.
 
 <img src="assets/clr_trim.png" width="100%">
 
@@ -483,37 +491,41 @@ The caveat: zeros are still a problem. We can either *impute or discard* them.
 
 ## After hypothesis testing, we need to *correct* our p-values
 
-<div style="width: 40%; padding: 5px;">
+<div style="display: flex; justify-content: space-between; align-items: center;">
 
-<img src="assets/p_val_adjust.png" width="60%">
+<img src="assets/p_val_adjust.png" width="30%" style="margin-left: 10px;">
 
 <div class="footnote">
 
 Figure from [Genevia Technologies](https://geneviatechnologies.com/blog/what-is-multiple-testing-correction/)
 
 </div>
-</div>
 
-<div style="display: flex; justify-content: space-around; align-items: center; width: 40%; padding: 5px">
+<div style="width: 60%;">
 
 We perform p-value correction to minimize the false discovery rate (FDR).
 
 We also look at the pre-correction p-value distribution as a sanity check.
 
 </div>
+</div>
 
 ---
 
 ## Limitations
 
+<div style="display: flex; justify-content: space-between; align-items: center;">
+
+<div style="width: 50%;">
+
 Analysis of synthetic communities suggests that *bacterial taxa* have different *sequencing efficiencies*,
 which can distort differences in abundance ([McLaren et. al., 2019](https://elifesciences.org/articles/46923)).
 
-<div style="display: flex; justify-content: space-between; align-items: center; padding: 5px;">
-
-<img src="assets/taxa_bias.png" width="50%" >
-
 A new method that accounts for this bias is currently in review. radEmu, developed by David Claussen and Amy Willis at UW, is available as an R package on [Github](https://github.com/statdivlab/radEmu).
+
+</div>
+
+<img src="assets/taxa_bias.png" width="50%" style="margin-left: 5px;">
 
 </div>
 
