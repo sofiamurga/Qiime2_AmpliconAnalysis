@@ -473,7 +473,7 @@ We have a few options:
 
 </div>
 
-<img src="assets/RA_split_dist.png" width="50%" style="margin-left: 10px;>
+<img src="assets/RA_split_dist.png" width="50%" style="margin-left: 10px;">
 
 </div>
 
