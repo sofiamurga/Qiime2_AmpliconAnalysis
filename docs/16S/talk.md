@@ -13,7 +13,7 @@ from the *ISB Microbiome Course 2024*
 <a href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fa fa-bullhorn"></i>CC-BY-NC</a>
 <a href="https://gibbons.isbscience.org/"><i class="fa fa-globe"></i>gibbons.isbscience.org</a>
 <a href="https://github.com/gibbons-lab"><i class="fa fa-github"></i>gibbons-lab</a>
-<a href="https://www.linkedin.com/in/alyssa-n-easton-7692b4175"><i class="fa fa-linkedin-square"></i>Alyssa N Easton</a>
+<a href="https://www.linkedin.com/in/alyssa-n-easton-7692b4175"><i class="fa fa-linkedin-square"></i>Alyssa's LinkedIn</a>
 </div>
 
 ---
@@ -71,8 +71,9 @@ In case you get lost, *all* output we generate can be found on [Github](https://
 
 ## The Gut-Brain Axis
 
-<img src="assets/gut_brain_axis.png" height="700vh">
-
+<div style="display: flex; justify-content: space-around; align-items: center; height: 100%">
+<img src="assets/gut_brain_axis.jpeg" height="100%">
+</div>
 <div class="footnote">
 created with *BioRender.com*
 </div>
@@ -188,7 +189,7 @@ The V4-specific primers used in this study were F515/R806. How long is the ampli
 
 ## Errors during PCR and sequencing generate *noise*
 
-<img src="assets/pcr_seq_errors.png" width="80%">
+<img src="assets/pcr_seq_errors.png" width="100%">
 
 ---
 
@@ -419,11 +420,11 @@ Microbiome relative abundance data is:
 
 <div style="width: 40%; text-align:center; padding: 5px;">
 
-<img src="assets/rel_abund_histogram.png">
+<img src="assets/rel_abund_histogram.png", width="60%">
 
 </div>
 </div>
-
+<br>
 These features violate the assumptions of parametric statistical tests.
 
 ---
@@ -441,46 +442,72 @@ We have a few options:
 
 ## Wilcoxon Rank-Sum Test (a.k.a. Mann-Whitney U test)
 
+<div style="display: flex; justify-content: space-around; align-items: center; height: 100%">
+
+<div style="width: 40%; padding: 5px;">
+
 - Nonparametric test for difference in a continuous variable between two groups
 - Uses *ranks*, rather than counts
 - Underpowered, because we are not assuming an ideal distribution shape
 
-<img src="assets/RA_split_dist.png" width="75%">
+</div>
+
+<div style="width: 40%; text-align:center; padding: 5px;">
+
+<img src="assets/RA_split_dist.png", width="60%">
+
+</div>
+</div>
 
 ---
 
 ## Normalization + Parametric tests
 
-The center-log ratio transform (Aitchison, 1982), is a transformation for compositional data that normalizes by the *sample geometric mean*, which is less sensitive to outliers and gives more weight to smaller values.
+The center-log ratio (CLR) transform (Aitchison, 1982), is a transformation for compositional data that normalizes by the *sample geometric mean*, which is less sensitive to outliers and gives more weight to smaller values.
 
-<img src="assets/clr.png" width="75%">
+<img src="assets/clr_trim.png" width="75%">
 
-The caveat: zeros are still a problem. We can either impute them somehow, or discard them. Check out [this blog post](https://cduvallet.github.io/posts/2018/06/fuzzy-zeros) for more information on imputation with zero-inflated compositional data.
+The caveat: zeros are still a problem. We can either *impute or discard* them.
 
 ---
 
 ## After hypothesis testing, we need to *correct* our p-values
 
-Multiple comparisons inflate the likelihood of false positives!
+<div style="display: flex; justify-content: space-around; align-items: center; height: 100%">
 
-Check your p-value distribution.
+<div style="width: 40%; text-align:center; padding: 5px;">
+
+<img src="assets/p_val_adjust.png", width="60%">
+
+</div>
+
+<div style="width: 40%; padding: 5px;">
+
+We perform p-value correction to minimize the false discovery rate (FDR)
+
+We should also look at the p-value distribution to make sure no human errors were made along this processing pipeline.
+
+</div>
+</div>
+
+<div class="footnote">
+
+Figure from [Genevia Technologies](https://geneviatechnologies.com/blog/what-is-multiple-testing-correction/)
 
 ---
 
 ## Limitations
 
-Analysis of synthetic communities suggests that *bacterial taxa* have different *sequencing efficiencies*<br>
+Analysis of synthetic communities suggests that *bacterial taxa* have different *sequencing efficiencies*,
+which can distort differences in abundance ([McLaren et. al., 2019](https://elifesciences.org/articles/46923)).
 
-If each taxon has a sequencing efficiency *B*, between-sample differences in actual abundance (A) get *distorted*
+<div style="display: flex; justify-content: space-between; align-items: center">
 
-<img src="assets/taxa_bias.png" width="50%">
+<img src="assets/taxa_bias.png" width="50%" >
 
-Only one method currently takes this possible bias into account; radEmu (developed by David Claussen and Amy Willis at UW) is currently in review, but the R package is available on [Github]()
+A new method that accounts for this bias is currently in review. radEmu, developed by  David Claussen and Amy Willis at UW, is available as an R package on [Github](https://github.com/statdivlab/radEmu).
 
-<div class="footnote">
-
-Figure from [McLaren, 2019](https://elifesciences.org/articles/46923)<br>
-Expanded manuscript [McLaren, 2022](https://mikemc.github.io/differential-abundance-theory/v/7412a36ddb8cad3c1c0f3ff2055f5402c4a74360/index.html)
+</div>
 
 ---
 
