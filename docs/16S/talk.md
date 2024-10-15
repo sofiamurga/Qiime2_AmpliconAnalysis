@@ -560,7 +560,7 @@ A new method that accounts for this bias is currently in review. *radEmu*, devel
 
 ## Your turn!
 
-Which taxa are associated with the disease state?
+Put taxonomic assignments on your tree!
 
 <img src="assets/coding.gif" width="50%">
 
