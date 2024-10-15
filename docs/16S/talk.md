@@ -68,9 +68,7 @@ In case you get lost, *all* output we generate can be found on [Github](https://
 
 ---
 
-## The Gut-Brain Axis
-
-<img src="assets/gut_brain_axis.jpeg" height="75%">
+<img src="assets/gut_brain_axis.jpeg" height="70%">
 
 <div class="footnote">
 created with *BioRender.com*
