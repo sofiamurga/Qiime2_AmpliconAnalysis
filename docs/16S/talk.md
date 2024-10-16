@@ -687,7 +687,7 @@ These features violate the assumptions of parametric statistical tests.
 
 </div>
 
-Notes:
+Note:
 
 Spoiler alert! Microbiome relative abundance data is wonky because of both the bias of sequencing and also the way microbial communities are. So as we talked about on the last slide, our data is compositional, in that we only know proportions, but also because microbes are co-correlated in different community structures because of their ecological relationships, like cross-feeding or competing. Because we can only sequence to a certain depth, we also cannot tell the difference between true and sampling zeroes, which means that we have an abnormally high amount of zeros. The variance is also higher than you would expect from a Poisson distribution, or it is overdispersed, because of these clustering effects that may be derived from true ecological relationships. For example, the chances you would randomly draw a butyrate-producer might be higher if you had already drawn a mucin-degrader, because this is a real cross-feeding interaction. And given all of this, we can clearly see that the distribution is not normal. 
 
@@ -793,7 +793,7 @@ A new method that accounts for this bias is currently in review. *radEmu*, devel
 
 </div>
 
-Notes: 
+Note: 
 
 And finally, while differential abundance analysis is very interesting, it's also got pretty big caveats, like the issues we already discussed, and also maybe some issues we can't see just by looking at the data. Studies of defined bacterial communities suggest that bacterial taxa are captured by sequencing at different efficiencies, and that this bias can distort differences in abundance. In this figure from members of the Willis Lab, you can see how taxonomic efficiency bias can actually distort between-sample or between-group comparisons of relative abundance. So we have here, 3 levels of sequencing efficiency for taxoa 1, 2, and 3, which are low, high, and medium. If we have a larger true abundance of high-efficiency taxon 2, it shrinks the observed abundances of the other taxa. Versus in sample 2, we have a very low amount of the high-efficiency taxon, so the medium-efficiency taxon 3 is overrepresented in the observed abundances. 
 So, we know that taxon 3 is more abundant in sample one, because we predefined these samples. But if we were only looking at the observed relative abundances, we would think taxon 3 is more abundant in sample 2. 
