@@ -106,7 +106,7 @@ What do these microbes do for us? One of their primary functions is aiding in di
 
 ## The Gut-brain axis
 
-<img src="assets/gut_brain_axis.jpeg" height="60%">
+<img src="assets/gut_brain_axis.jpeg" height="700vh">
 
 <div class="footnote">
 created with *BioRender.com*
@@ -683,7 +683,7 @@ These features violate the assumptions of parametric statistical tests.
 
 </div>
 
-<img src="assets/rel_abund_histogram.png" width="40%" style="margin-left: 10px;">
+<img src="assets/rel_abund_histogram.png" width="30%">
 
 </div>
 
