@@ -681,9 +681,9 @@ Microbiome relative abundance data is:
 
 These features violate the assumptions of parametric statistical tests.
 
-</div style="max-width: 50%; max-height: 50%;">
+</div style="max-width: 40%; max-height: 40%;">
 
-<img src="assets/rel_abund_histogram.png" style="width: 50%; height: auto; object-fit: contain;">
+<img src="assets/rel_abund_histogram.png" style="width: 50%; height: auto;">
 
 </div>
 </div>
