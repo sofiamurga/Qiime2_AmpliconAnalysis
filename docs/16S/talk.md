@@ -683,7 +683,7 @@ These features violate the assumptions of parametric statistical tests.
 
 </div>
 
-<img src="assets/rel_abund_histogram.png" width="300vh">
+<img src="assets/rel_abund_histogram.png" style="max-width: 300px; height: auto;">
 
 </div>
 
