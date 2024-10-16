@@ -427,7 +427,7 @@ How different are two or more samples/donors/sites from one another other?
 - *weighted:* do shared taxa have *similar abundances*?<br>
   → Bray-Curtis distance, weighted UniFrac
 
-Notes:
+Note:
 
 Beta diversity, on the other hand, measures the diversity between different samples. It answers the question: 'How different are two or more samples from one another?' There are two types of beta diversity:
 Unweighted beta diversity: This looks at the presence or absence of taxa across samples. It only considers whether taxa are shared between samples, regardless of their abundance.
