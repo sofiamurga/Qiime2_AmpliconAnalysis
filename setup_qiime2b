@@ -1,65 +1,80 @@
-# Change to the materials directory
-# This is still necessary as other parts of your notebook depend on this.
-%cd materials
+%%bash
+set -e
 
-# --- Installation and Setup ---
+# --- Content of setup_qiime2b.sh starts here ---
 
-# Install Miniconda - adapting the script's logic
-# Download the installer
-!wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh
+# 2024.5 QIIME 2 Amplicon Install
+# Based on: https://github.com/Gibbons-Lab/isb_course_2024/blob/main/setup_qiime2
 
-# Run the installer in silent mode, specifying the installation path
-# We'll install it in /usr/local/miniforge3/ as seen in similar setups [1]
-!bash /tmp/miniconda.sh -b -p /usr/local/miniforge3
+# This script will install QIIME 2 on Google Colab.
+# It will take some time (10-15 minutes).
 
-# Clean up the installer
-!rm /tmp/miniconda.sh
+# It installs Miniconda3 to /usr/local/miniforge3/
+# Creates a Conda environment called qiime2-2024.5
+# Installs QIIME 2 and plugins into that environment
+# Downloads the relevant classifier file for this workshop
 
-# Initialize Conda - adapting the script's logic
-# This sets up the necessary environment variables for Conda
-!/usr/local/miniforge3/bin/conda init bash
+MINIFORGE_URL="https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh"
+MINIFORGE_INSTALL_DIR="/usr/local/miniforge3"
+QIIME2_ENV_NAME="qiime2-2024.5"
+QIIME2_VERSION="2024.5"
+QIIME2_PYTHON_VERSION="3.8"
+CLASSIFIER_URL="https://data.qiime2.org/2024.5/common/ncbi-refseq-genus-515f-806r.qza"
+CLASSIFIER_OUTPUT_PATH="ncbi-refseq-genus-515f-806r.qza"
 
-# Update PATH to include conda and other binaries - IMPORTANT for subsequent steps
-# This is the crucial part that needs to be done in the same shell session
-# or by explicitly calling the binaries.
-# We can add the miniconda bin to the PATH for the current notebook session
-import os
-os.environ['PATH'] = '/usr/local/miniforge3/bin:' + os.environ['PATH']
 
-# Verify conda is available
-!conda --version
+# Install Miniconda3 (via Miniforge)
+echo "Downloading Miniconda3..."
+wget $MINIFORGE_URL -O /tmp/miniforge3.sh
+echo "Installing Miniconda3 to $MINIFORGE_INSTALL_DIR..."
+bash /tmp/miniforge3.sh -b -p $MINIFORGE_INSTALL_DIR
+echo "Miniconda3 installed."
 
-# Create and activate the QIIME 2 environment - adapting the script's logic
-# We use 'conda create' and 'conda activate' with the prefix
-# This approach is often more reliable in scripting environments
-!conda create -y -n qiime2-2024.5 python=3.8
+# Clean up installer
+rm /tmp/miniforge3.sh
 
-# Activate the environment - this is tricky in notebooks.
-# Instead of relying on 'conda activate' to modify the shell state,
-# we can directly call commands from the environment's bin directory.
-# However, for installing into the environment, 'conda run' is often best.
+# Initialize Conda for bash
+echo "Initializing Conda..."
+eval "$($MINIFORGE_INSTALL_DIR/bin/conda shell.bash hook)"
+echo "Conda initialized."
 
-# Install QIIME 2 and plugins - adapting the script's logic
-# Use 'conda run' to execute commands within the specific environment
-!conda run -n qiime2-2024.5 pip install qiime2==2024.5
+# Create the QIIME 2 environment
+echo "Creating Conda environment '$QIIME2_ENV_NAME'..."
+conda create -y -n $QIIME2_ENV_NAME python=$QIIME2_PYTHON_VERSION
+echo "Environment created."
 
-# Install relevant plugins
-!conda run -n qiime2-2024.5 pip install qiime2-q2cli==2024.5
-!conda run -n qiime2-2024.5 pip install qiime2-q2-feature-classifier==2024.5
-!conda run -n qiime2-2024.5 pip install qiime2-q2-dada2==2024.5
-!conda run -n qiime2-2024.5 pip install qiime2-q2-phylogeny==2024.5
-!conda run -n qiime2-2024.5 pip install qiime2-q2-empress==2024.5
-!conda run -n qiime2-2024.5 pip install qiime2-q2-diversity==2024.5
-!conda run -n qiime2-2024.5 pip install qiime2-q2-taxa==2024.5
+# Activate the environment
+echo "Activating environment '$QIIME2_ENV_NAME'..."
+conda activate $QIIME2_ENV_NAME
+echo "Environment activated."
 
-# Install biom-format for exporting
-!conda run -n qiime2-2024.5 pip install biom-format
+# Install QIIME 2 and plugins using pip (as per the script)
+echo "Installing QIIME 2 v$QIIME2_VERSION..."
+pip install qiime2==$QIIME2_VERSION
+
+echo "Installing QIIME 2 plugins..."
+pip install qiime2-q2cli==$QIIME2_VERSION
+pip install qiime2-q2-feature-classifier==$QIIME2_VERSION
+pip install qiime2-q2-dada2==$QIIME2_VERSION
+pip install qiime2-q2-phylogeny==$QIIME2_VERSION
+pip install qiime2-q2-empress==$QIIME2_VERSION
+pip install qiime2-q2-diversity==$QIIME2_VERSION
+pip install qiime2-q2-taxa==$QIIME2_VERSION
+
+# Install biom-format
+echo "Installing biom-format..."
+pip install biom-format
+
+echo "QIIME 2 and plugins installed."
 
 # Download the classifier
-!wget https://data.qiime2.org/2024.5/common/ncbi-refseq-genus-515f-806r.qza -O ncbi-refseq-genus-515f-806r.qza
+echo "Downloading classifier: $CLASSIFIER_URL"
+wget $CLASSIFIER_URL -O $CLASSIFIER_OUTPUT_PATH
+echo "Classifier downloaded to $CLASSIFIER_OUTPUT_PATH"
 
-# --- Verification ---
+# Verify QIIME 2 installation
+echo "Verifying QIIME 2 installation..."
+qiime info
+echo "Setup complete."
 
-# Verify QIIME 2 installation by running a simple command
-# Use 'conda run' to execute qiime from the environment
-!conda run -n qiime2-2024.5 qiime info
+# --- Content of setup_qiime2b.sh ends here ---
